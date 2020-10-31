@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Commerce Projects List</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/project_list.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body style="background: url(../static/images/background.jpg) center fixed; background-size: 100%;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                	<span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span id="id_name_of_site">Welcome to E-Commerce !</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Service</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
+                    <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                    <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart<span class="book_count fl"> 0</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   User Center <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+
+        <div class="container" style="width: 90%; height: 100% ;background: rgba(255,255,255,0.7)" >
+            <br>
+            <br>
+        </div>
+    </div>
+
+</body>
+</html>
