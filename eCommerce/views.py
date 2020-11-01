@@ -104,3 +104,5 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
+
+
