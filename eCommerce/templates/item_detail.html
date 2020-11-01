@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body style="background: url(../static/images/background.jpg) center fixed; background-size: 100%;">
+    <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span id="id_name_of_site">Welcome to E-Commerce !</span>
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#contact">Service</a></li>
+                    </ul>
+
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input id="search_bar" type="text" class="form-control" placeholder="Search products..." width="50%">
+                        </div>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button>
+                    </form>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
+                        <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                        <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 5</span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   Hello, Team 25! <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+    </div>
+
+    <div class="container" style="margin-top: 30px">
+    </div>
+
+    <div class="content">
+
+        <div class="container" style="width: 92%; height: 100% ;background: rgba(255,255,255,0.85)">
+            <div class="container" style="margin-top: 20px">
+                <div class="breadcrumb" style="background: rgba(255,255,255,0)">
+                    <a href="#">All Categories</a>
+                    <span>></span>
+                    <a href="#">Python</a>
+                    <span>></span>
+                    <a href="#">Python Cookbook</a>
+                </div>
+
+
+
+                <div class="book_detail_con clearfix">
+                    <div class="book_detail_pic fl"><img src="../static/images/books/book001.jpg"></div>
+
+                    <div class="book_detail_list fr">
+                        <h3>Python Cookbook, Third Edition</h3>
+                        <p>If you need help writing programs in Python 3, or want to update older Python 2 code, this book is just the ticket. Packed with practical recipes written and tested with Python 3.3, this unique cookbook is for experienced Python programmers who want to focus on modern tools and idioms.</p>
+                        <div class="prize_bar">
+                            <span class="show_pirze">¥<em>100</em></span>
+                            <span class="show_unit">Unit：册</span>
+                        </div>
+                        <div class="book_num clearfix">
+                            <div class="num_name fl">Number：</div>
+                            <div class="num_add fl">
+                                <input type="text" class="num_show fl" value="1">
+                                <a href="javascript:;" class="add fr">+</a>
+                                <a href="javascript:;" class="minus fr">-</a>
+                            </div>
+                        </div>
+                        <div class="total">Total：<em>$100.00</em></div>
+                        <div class="operate_btn">
+                            <a href="javascript:;" class="buy_btn">Buy Now</a>
+                            <a href="javascript:;" class="add_cart" id="add_cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main_wrap clearfix" style="margin-top: 200px">
+                <div class="l_wrap fl clearfix">
+                    <div class="new_book">
+                        <p>Recommendation</p>
+                        <ul>
+                            <li>
+                                <a href="#"><img src="../static/images/books/book001.jpg"></a>
+                                <h4><a href="#">Python Cookbook</a></h4>
+                                <div class="prize">$ 8.90</div>
+                            </li>
+                            <li>
+                                <a href="#"><img src="../static/images/books/book002.jpeg"></a>
+                                <h4><a href="#">Serious Python</a></h4>
+                                <div class="prize">$ 34.95</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="r_wrap fr clearfix">
+                    <ul class="detail_tab clearfix">
+                        <li class="active">Product Description</li>
+                        <li>Comment</li>
+                    </ul>
+
+                    <div class="tab_content">
+                        <dl>
+                            <dt>Product Detail：</dt>
+                            <dd>Rather than attempting to seek out Python 3-specific recipes, the topics of this book are merely inspired by existing code and techniques. Using these ideas as a springboard, the writing is an original work that has been deliberately written with the most modern Python programming techniques possible. Thus, it can serve as a reference for anyone who wants to write their code in a modern style.
+In choosing which recipes to include, there is a certain realization that it is simply impossible to write a book that covers every possible thing that someone might do with Python. Thus, a priority has been given to topics that focus on the core Python language as well as tasks that are common to a wide variety of application domains. In addition, many of the recipes aim to illustrate features that are new to Python 3 and more likely to be unknown to even experienced programmers using older versions.
+There is also a certain preference to recipes that illustrate a generally applicable programming technique (i.e., programming patterns) as opposed to those that narrowly try to address a very specific practical problem. Although certain third-party packages get coverage, a majority of the recipes focus on the core language and standard library.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
