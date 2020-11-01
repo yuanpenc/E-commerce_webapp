@@ -11,7 +11,7 @@ from eCommerce.forms import RegisterForm, LoginForm
 
 @login_required
 def home_page(request):
-    return render(request, 'list_items.html', {})
+    return render(request, 'base.html', {})
 
 
 @login_required
