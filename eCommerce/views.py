@@ -106,5 +106,3 @@ def register_action(request):
     return redirect(reverse('home'))
 
 
-
-
