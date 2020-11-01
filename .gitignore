@@ -18,3 +18,4 @@ images
 socialnetwork/migrations
 # MacOS index file
 .DS_Store
+.idea
