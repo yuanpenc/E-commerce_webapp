@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.urls import reverse
 
-
 from eCommerce.forms import RegisterForm, LoginForm
 
 
@@ -16,8 +15,9 @@ def home_page(request):
 
 @login_required
 def stream_action(request):
-    logout(request)
-    return HttpResponse("hello world")
+    return render(request, 'base.html', {})
+    # logout(request)
+    # return HttpResponse("hello world")
 
 
 def login_action(request):
@@ -106,3 +106,5 @@ def register_action(request):
     return redirect(reverse('home'))
 
 
+def seller_profile(request):
+    return render(request, 'eCommerce/seller_profile.html', {})

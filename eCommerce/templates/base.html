@@ -35,7 +35,7 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
+                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
                         <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 0</span></a></li>
                         <li class="dropdown">
@@ -62,12 +62,19 @@
 
 
 
+{#    <div class="content">#}
+{#        <div class="container" style="width: 92%; height: 100% ;background-color: red">#}
+{#        background: rgba(255,255,255,0.85)#}
+{#            {% block content %}#}
+{#            {% endblock %}#}
+{#        </div>#}
+{#    </div>#}
     <div class="content">
-        <div class="container" style="width: 92%; height: 100% ;background: rgba(255,255,255,0.85)">
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
+
+
 
 </body>
 </html>
