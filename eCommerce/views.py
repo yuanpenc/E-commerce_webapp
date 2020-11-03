@@ -14,10 +14,9 @@ def home_page(request):
     return render(request, 'base.html', {})
 
 
-@login_required
+
 def stream_action(request):
-    logout(request)
-    return HttpResponse("hello world")
+    return render(request, 'eCommerce/profile.html', {})
 
 
 def login_action(request):
