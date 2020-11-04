@@ -5,22 +5,31 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.urls import reverse
 
-
 from eCommerce.forms import RegisterForm, LoginForm
 
 
-def list_items(request):
-    return render(request, 'list_items.html', {})
-
-
-def item_detail(request):
-    return render(request, 'item_detail.html', {})
-
-
-@login_required
 def stream_action(request):
-    logout(request)
-    return HttpResponse("hello world")
+    return render(request, 'eCommerce/nav.html', {})
+
+
+def list(request):
+    return render(request, 'eCommerce/list_items.html', {})
+
+
+def detail(request):
+    return render(request, 'eCommerce/item_detail.html', {})
+
+
+def profile(request):
+    return render(request, 'eCommerce/profile.html', {})
+
+
+def myinfo(request):
+    return render(request, 'eCommerce/myinfo.html', {})
+
+
+def cart(request):
+    return render(request, 'eCommerce/cart.html', {})
 
 
 def login_action(request):
@@ -107,5 +116,3 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
-
-
