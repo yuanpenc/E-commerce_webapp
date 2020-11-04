@@ -9,9 +9,12 @@ from django.urls import reverse
 from eCommerce.forms import RegisterForm, LoginForm
 
 
-@login_required
-def home_page(request):
-    return render(request, 'base.html', {})
+def list_items(request):
+    return render(request, 'list_items.html', {})
+
+
+def item_detail(request):
+    return render(request, 'item_detail.html', {})
 
 
 @login_required

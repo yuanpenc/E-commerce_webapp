@@ -24,18 +24,31 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#contact">Service</a></li>
+                        <li><a href="#">Service</a></li>
                     </ul>
 
-                    <form class="navbar-form navbar-left" role="search">
+                    <form class="nav navbar-form navbar-left" role="search">
+                        <li><select class="form-control" style="width:80px;">
+                                    <option>All</option>
+                                    <option>Arts & Crafts</option>
+                                    <option>Automotive</option>
+                                    <option>Baby</option>
+                                    <option>Books</option>
+                                    <option>Computers</option>
+                                    <option>Electronics</option>
+                                    <option>Deals</option>
+                                    <option>Luggage</option>
+                                    <option>Software</option>
+                                </select>
                         <div class="form-group">
                             <input id="search_bar" type="text" class="form-control" placeholder="Search products..." width="50%">
                         </div>
-                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button>
+
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button></li>
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
+{#                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>#}
                         <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 0</span></a></li>
                         <li class="dropdown">
@@ -47,7 +60,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-header">Nav header</li>
                                     <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-off"> </span> Logout</a></li>
                                 </ul>
                         </li>
                     </ul>
