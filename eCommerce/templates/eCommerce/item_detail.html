@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "eCommerce/base.html" %}
 
 {% block content %}
-
+        <div class="container" style="width: 92%; height: 100% ;background: rgba(255,255,255,0.85)">
             <div class="container" style="margin-top: 20px">
                 <div class="breadcrumb" style="background: rgba(255,255,255,0)">
                     <a href="#">All Categories</a>
                     <span>></span>
-                    <a href="#">Python</a>
+                    <a href="#">Books</a>
                     <span>></span>
                     <a href="#">Python Cookbook</a>
                 </div>
@@ -20,15 +20,24 @@
                         <h3>Python Cookbook, Third Edition</h3>
                         <p>If you need help writing programs in Python 3, or want to update older Python 2 code, this book is just the ticket. Packed with practical recipes written and tested with Python 3.3, this unique cookbook is for experienced Python programmers who want to focus on modern tools and idioms.</p>
                         <div class="prize_bar">
-                            <span class="show_pirze">¥<em>100</em></span>
-                            <span class="show_unit">Unit：册</span>
+                            <span class="show_pirze">¥<em>100.00</em></span>
+                            <span class="show_unit">Unit：Volume</span>
                         </div>
                         <div class="book_num clearfix">
-                            <div class="num_name fl">Number：</div>
+                            <div class="num_name fl">Qty：</div>
                             <div class="num_add fl">
-                                <input type="text" class="num_show fl" value="1">
-                                <a href="javascript:;" class="add fr">+</a>
-                                <a href="javascript:;" class="minus fr">-</a>
+                                <select class="num_add">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
                             </div>
                         </div>
                         <div class="total">Total：<em>$100.00</em></div>
@@ -76,4 +85,5 @@ There is also a certain preference to recipes that illustrate a generally applic
                 </div>
                 <br><br>
             </div>
+        </div>
 {% endblock %}

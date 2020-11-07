@@ -18,7 +18,8 @@ a{text-decoration:none;}
 img{border:0;}
 
 /* 清除浮动 */
-.clearfix:before,.clearfix:after{content:"";display:table}
+.clearfix:before,
+.clearfix:after{content:"";display:table}
 .clearfix:after{clear:both;}
 .clearfix{zoom:1}
 

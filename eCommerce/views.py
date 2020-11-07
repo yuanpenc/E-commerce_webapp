@@ -8,16 +8,33 @@ from django.urls import reverse
 from eCommerce.forms import RegisterForm, LoginForm
 
 
-@login_required
-def home_page(request):
-    return render(request, 'base.html', {})
+def stream_action(request):
+    return render(request, 'eCommerce/nav.html', {})
 
 
 @login_required
 def stream_action(request):
-    return render(request, 'base.html', {})
+    return render(request, 'eCommerce/base.html', {})
     # logout(request)
     # return HttpResponse("hello world")
+def list(request):
+    return render(request, 'eCommerce/list_items.html', {})
+
+
+def detail(request):
+    return render(request, 'eCommerce/item_detail.html', {})
+
+
+def profile(request):
+    return render(request, 'eCommerce/profile.html', {})
+
+
+def myinfo(request):
+    return render(request, 'eCommerce/myinfo.html', {})
+
+
+def cart(request):
+    return render(request, 'eCommerce/cart.html', {})
 
 
 def login_action(request):
