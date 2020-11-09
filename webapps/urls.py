@@ -20,6 +20,7 @@ from eCommerce import views
 urlpatterns = [
     path('', views.stream_action),
     path('eCommerce/', include('eCommerce.urls')),
+    path('goods/', include('goods.urls'))
 ]
 
 
