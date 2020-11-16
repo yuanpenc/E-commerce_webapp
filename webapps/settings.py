@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eCommerce',
     'goods',
+    'information',
 ]
 
 MIDDLEWARE = [
