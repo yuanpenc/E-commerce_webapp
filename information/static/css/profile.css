@@ -1,0 +1,98 @@
+ .left{
+    margin: 60px 20px 60px 35px;
+    width: 20%;
+    background: #fff;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #e4e4e4;
+    float: left;
+}
+.left h3{
+    border-bottom: 1px solid #A10000;
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: normal;
+    font-size: 23px;
+}
+.left h3 span{
+    width: 70%;
+    margin: 0 auto;
+
+}
+.left h3 a img{
+    border: 5px solid black;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+.left  h4{
+    width: 50%;
+    color: #444;
+    font-size: 14px;
+    margin: 5px;
+
+}
+.left ul li a{
+    display: inline-block;
+    color: #757575;
+    width: 40%;
+    text-align: left;
+    font-size: 14px;
+}
+.right{
+    background: #fff;
+    width: 70%;
+    padding: 50px;
+    margin: 60px 20px;
+    border: 1px solid #e4e4e4;
+    float: left;
+}
+.right .info{
+    width: 100%;
+    height: 70px;
+    /* padding-bottom:10px ; */
+    border-bottom: 1px solid #E6E6E6;
+}
+.right div a .fl{
+
+    display: block;
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    border: 10px solid red;
+    padding: 1px;
+}
+.right div a img{
+    width: 50px;
+}
+.right div p{
+    width: 50%;
+    height: 80%;
+    padding-top: 5px;
+    margin-left: 60px;
+}
+.bott{
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.bott div {
+    flex: 1 1 50%;
+    margin: 18px 0;
+}
+.bott div p{
+    font-size: 15px;
+    color: #757575;
+    margin: 33px 0 0 14px;
+    float: left;
+}
+.bott div a{
+    display: block;
+    font-size: 12px;
+    color: #757575;
+    margin-top: 16px;
+}
+.bott div i{
+    margin: 40px 10px 0px 40px;
+    float: left;
+}
