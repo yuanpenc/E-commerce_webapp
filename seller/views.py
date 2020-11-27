@@ -6,7 +6,10 @@ from seller.forms import *
 
 
 def sellerinfo(request):
-    return render(request, 'seller/sellerinfo.html', {})
+    context = {}
+    items = Items.objects.all().filter(created_by=1)
+    context['items'] = items
+    return render(request, 'seller/sellerinfo.html', context)
 
 
 def sellersetting(request):
