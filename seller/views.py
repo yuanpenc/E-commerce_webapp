@@ -24,4 +24,5 @@ def addItems(request):
         context['form'] = ItemForm()
         return render(request, 'seller/addItem.html', context)
 
+
     return render(request, 'seller/addItem.html', {})

@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from seller.models import Seller
+
 
 class Items(models.Model):
-    # status_choices = ((k, v) for k, v in STATUS_CHOICE.items())
     name = models.CharField(max_length=100)
     desc = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -13,8 +14,9 @@ class Items(models.Model):
     detail = models.CharField(max_length=1000)
     image = models.ImageField(upload_to='items')
     content_type = models.CharField(max_length=50, blank=True)
-    status = models.SmallIntegerField(default=1,)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="item_creators")
+    status = models.SmallIntegerField(default=1, )
+    created_by = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    category = models.CharField(max_length=20)
 
 
 class Comment(models.Model):
@@ -22,5 +24,3 @@ class Comment(models.Model):
     content = models.CharField(max_length=500)
     creation_time = models.DateTimeField()
     belong_to = models.ForeignKey(Items, on_delete=models.PROTECT, related_name="item_comments")
-
-
