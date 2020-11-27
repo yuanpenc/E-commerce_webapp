@@ -1,0 +1,46 @@
+{% extends "eCommerce/base.html" %}
+{% block content %}
+        <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+            <div class="left">
+                <h3>
+                    <a href="#"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    <span >My name</span>
+                </h3>
+                <div>
+                    <h4>Orders</h4>
+                    <ul>
+                        <li><a href="{% url 'cart' %}">My Cart</a></li>
+                        <li><a href="{% url 'cart' %}">My Orders</a></li>
+                    </ul>
+                    <h4>Account</h4>
+                    <ul>
+                        <li  class="on"><a href="{% url 'profile' %}">My profile</a></li>
+                        <li><a href="{% url 'profile' %}">My adress</a></li>
+                    </ul>
+                    <h4>Secure</h4>
+                    <ul>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <h2><strong>Profile</strong></h2>
+                <div class="flex">
+                    <div class="col1">
+                        <a href="#"> <img src="../static/eCommerce/img/flower.jpg" alt=""></a>
+                    </div>
+                    <div class="col2">
+                        <h3 class="title"><strong style="float: left;">Personal info</strong><a href="#" class="fr" id="edit1">edit</a></h3>
+							<div>Name: Yuanpeng Cao</div>
+							<div>Birthday：11/03/2020</div>
+							<div>Gender：male</div>
+							<h3>Default Address</h3>
+							<div><span class="fl">828 Greenfield Ave, Pittsburgh, PA</span><a href="#" class="fr" id="edit2">edit</a></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
