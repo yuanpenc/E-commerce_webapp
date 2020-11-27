@@ -24,6 +24,7 @@ urlpatterns = [
     path('goods/', include('goods.urls')),
     path('', views.myinfo),
     path('information/', include('information.urls')),
+    path('seller/', include('seller.urls')),
 ]
 
 
