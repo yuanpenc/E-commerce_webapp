@@ -18,7 +18,7 @@
                     </ul>
                     <h4>QR Code</h4>
                     <ul>
-                        <li><a href="{% url 'addItems' %}">Upload Goods</a></li>
+                        <li><a href="{% url 'addItems' %}">Add Items</a></li>
                     </ul>
                     <ul>
                         <li><a href="{% url 'sellersetting' %}">Setting</a></li>
@@ -35,7 +35,7 @@
                         {% endfor %}
 
                         {% csrf_token %}
-                        <div style="position: relative; top: 15px"><button type="submit">Update Information</button></div>
+                        <div style="position: relative; top: 15px"><button type="submit">Add Items</button></div>
                     </form>
                 </div>
 
