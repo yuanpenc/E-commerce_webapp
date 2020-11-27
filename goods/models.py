@@ -3,7 +3,6 @@ from django.db import models
 
 
 class Items(models.Model):
-    # status_choices = ((k, v) for k, v in STATUS_CHOICE.items())
     name = models.CharField(max_length=100)
     desc = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -15,7 +14,7 @@ class Items(models.Model):
     content_type = models.CharField(max_length=50, blank=True)
     status = models.SmallIntegerField(default=1,)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="item_creators")
-
+    category = models.CharField(max_length=20)
 
 class Comment(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="comment_creators")
