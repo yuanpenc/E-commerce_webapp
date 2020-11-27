@@ -4,9 +4,11 @@
     <div class="container" style="width: 92%; height: 100% ;background: rgba(255,255,255,0.85)">
             <div class="container" style="margin-top: 20px">
                 <div class="breadcrumb" style="background: rgba(255,255,255,0)">
-                    <a href="#">All Categories</a>
-                    <span>></span>
-                    <a href="list_items">Books</a>
+                    <a href="list_items">All Categories</a>
+                    {% if category != "all" %}
+                        <span>></span>
+                        <a href="list_items">{{ category }}</a>
+                    {% endif %}
                 </div>
 
 
@@ -17,8 +19,8 @@
                             <ul>
                                 {% for rec in recommend %}
                                 <li>
-                                    <a href="item_detail?itemId={{ rec.id }}"><img src="{% url 'photo' rec.id %}"></a>
-                                    <h4><a href="item_detail?itemId={{ rec.id }}">{{ rec.name }}</a></h4>
+                                    <a href="item_detail?itemId={{ rec.id }}&category={{ category }}"><img src="{% url 'photo' rec.id %}"></a>
+                                    <h4><a href="item_detail?itemId={{ rec.id }}&category={{ category }}">{{ rec.name }}</a></h4>
                                     <div class="operate">
                                         <span class="prize">$ {{ rec.price }}</span>
                                         <a href="#" class="add_book" title="add_to_cart"></a>
@@ -31,17 +33,33 @@
 
                     <div class="r_wrap fr clearfix">
                         <div class="sort_bar">
-                            <a href="list_items?orderBy=-id">Sorted by Featured</a>
-                            <a href="list_items?orderBy=price">Price: Low to High</a>
-                            <a href="list_items?orderBy=-price">Price: High to Low</a>
-                            <a href="list_items?orderBy=id">Newest Arrivals</a>
+                            {% if orderBy == "id" %}
+                                <a class="active" href="list_items?orderBy=id&category={{ category }}&search={{ search }}">Sorted by Featured</a>
+                            {% else %}
+                                <a href="list_items?orderBy=id&category={{ category }}&search={{ search }}">Sorted by Featured</a>
+                            {% endif %}
+                            {% if orderBy == "price" %}
+                                <a class="active" href="list_items?orderBy=price&category={{ category }}&search={{ search }}">Price: Low to High</a>
+                            {% else %}
+                                <a href="list_items?orderBy=price&category={{ category }}&search={{ search }}">Price: Low to High</a>
+                            {% endif %}
+                            {% if orderBy == "-price" %}
+                                <a class="active" href="list_items?orderBy=-price&category={{ category }}&search={{ search }}">Price: High to Low</a>
+                            {% else %}
+                                <a href="list_items?orderBy=-price&category={{ category }}&search={{ search }}">Price: High to Low</a>
+                            {% endif %}
+                            {% if orderBy == "-id" %}
+                                <a class="active" href="list_items?orderBy=-id&category={{ category }}&search={{ search }}">Newest Arrivals</a>
+                            {% else %}
+                                <a href="list_items?orderBy=-id&category={{ category }}&search={{ search }}">Newest Arrivals</a>
+                            {% endif %}
                         </div>
 
                         <ul class="book_type_list clearfix">
                             {% for item in items %}
                                 <li>
-                                    <a href="item_detail?itemId={{ item.id }}"><img src="{% url 'photo' item.id %}"></a>
-                                    <h4><a href="item_detail?itemId={{ item.id }}">{{ item.name }}</a></h4>
+                                    <a href="item_detail?itemId={{ item.id }}&category={{ category }}"><img src="{% url 'photo' item.id %}"></a>
+                                    <h4><a href="item_detail?itemId={{ item.id }}&category={{ category }}">{{ item.name }}</a></h4>
                                     <div class="operate">
                                         <span class="prize">$ {{ item.price }}</span>
                                         <a href="#" class="add_book" title="add_to_cart"></a>
@@ -50,13 +68,19 @@
                             {% endfor %}
                         </ul>
                         <div class="pagenation">
-                            <a href="#"><- Previous</a>
-                            <a href="list_items?pageNum=1">1</a>
-                            <a href="list_items?pageNum=2">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">Next -></a>
+                            {% if showPre %}
+                                <a href="list_items?pageNum={{ prePage }}&orderBy={{ orderBy }}&category={{ category }}&search={{ search }}"><- Previous</a>
+                            {% endif %}
+                            {% for num in numOfPagesList %}
+                                {% if curPage == num %}
+                                    <a class="active" href="list_items?pageNum={{ num }}&orderBy={{ orderBy }}&category={{ category }}&search={{ search }}">{{ num }}</a>
+                                {% else %}
+                                    <a href="list_items?pageNum={{ num }}&orderBy={{ orderBy }}&category={{ category }}&search={{ search }}">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if showNext %}
+                                <a href="list_items?pageNum={{ nextPage }}&orderBy={{ orderBy }}&category={{ category }}&search={{ search }}">Next -></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -65,3 +89,5 @@
             </div>
     </div>
 {% endblock %}
+
+

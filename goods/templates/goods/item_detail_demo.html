@@ -4,9 +4,9 @@
         <div class="container" style="width: 92%; height: 100% ;background: rgba(255,255,255,0.85)">
             <div class="container" style="margin-top: 20px">
                 <div class="breadcrumb" style="background: rgba(255,255,255,0)">
-                    <a href="#">All Categories</a>
+                    <a href="list_items">All Categories</a>
                     <span>></span>
-                    <a href="list_items">Books</a>
+                    <a href="list_items?category={{ item.category }}">{{ item.category }}</a>
                     <span>></span>
                     <a href="item_detail?itemId={{ item.id }}">{{ item.name }}</a>
                 </div>
@@ -18,13 +18,13 @@
                         <h3>{{ item.name }}</h3>
                         <p>{{ item.desc }}</p>
                         <div class="prize_bar">
-                            <span class="show_pirze">$<em>{{ item.price }}</em></span>
+                            <span class="show_pirze">$<em id="price">{{ item.price }}</em></span>
                             <span class="show_unit">Unit：{{ item.unit }}</span>
                         </div>
                         <div class="book_num clearfix">
                             <div class="num_name fl">Qty：</div>
                             <div class="num_add fl">
-                                <select class="num_add">
+                                <select id="qty" class="num_add" οnchange="calTotal()">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -38,7 +38,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="total">Total：<em>$ {{ item.price }}</em></div>
+                        <div class="total">Total：<em>$ <span id="totalPrice">{{ item.price }}</span></em></div>
                         <div class="operate_btn">
                             <a href="javascript:;" class="buy_btn">Buy Now</a>
                             <a href="javascript:;" class="add_cart" id="add_cart">Add to cart</a>
@@ -82,4 +82,16 @@
                 <br><br>
             </div>
         </div>
+{% endblock %}
+
+{% block addScript %}
+    function calTotal() {
+        document.getElementById("totalPrice").innerText = (parseFloat($('select#qty').val()) * parseFloat(document.getElementById("price").innerText)).toFixed(2);
+    }
+
+    $(function(){
+        $("select[id='qty']").change(function(){
+            calTotal();
+        })
+    })
 {% endblock %}

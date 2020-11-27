@@ -30,21 +30,22 @@
                         <li><a href="#">Service</a></li>
                     </ul>
 
-                    <form class="nav navbar-form navbar-left" role="search">
-                        <li><select class="form-control" style="width:80px;">
-                                    <option>All</option>
-                                    <option>Arts & Crafts</option>
+                    <form class="nav navbar-form navbar-left" role="search" method ="get" action="list_items">
+                        <li><select id="category" class="form-control" style="width:80px;" name="category">
+                                    <option value="all">All</option>
+                                    <option>Arts</option>
                                     <option>Automotive</option>
                                     <option>Baby</option>
                                     <option>Books</option>
                                     <option>Computers</option>
                                     <option>Electronics</option>
-                                    <option>Deals</option>
+                                    <option>Health</option>
                                     <option>Luggage</option>
                                     <option>Software</option>
                                 </select>
                         <div class="form-group">
-                            <input id="search_bar" type="text" class="form-control" placeholder="Search products..." width="50%">
+                            <input name="search" id="search_bar" list="item_list" type="text" class="form-control" autocomplete="off" placeholder="Search products..." width="50%">
+                            <datalist id="item_list"></datalist>
                         </div>
 
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button></li>
@@ -86,3 +87,30 @@
 
 </body>
 </html>
+
+<script>
+    {# Reference: https://www.cnblogs.com/shiyu404/p/6344591.html #}
+    $('input#search_bar').bind('keyup', function () {
+        var item = $('input#search_bar').val();
+        var category = $('select#category').val();
+        $.ajax({
+            url: "get_related",
+            type: "GET",
+            dataType: 'json',
+            data: {'item': item,
+                   'category': category},
+            async: false,
+            success: function (response) {
+                $('datalist#item_list').empty();
+                for (var i = 0; i < response.length; i++) {
+                    var add_options = '<option value="' + response[i] + '">'+ response[i] + '</option>';
+                    $('datalist#item_list').append(add_options);
+                }
+            }
+        })
+    });
+
+    {% block addScript %}
+    {% endblock %}
+
+</script>
