@@ -5,11 +5,15 @@ from django.shortcuts import render, get_object_or_404
 from seller.forms import *
 
 
-def sellerinfo(request):
+def sellerProfile(request):
     context = {}
-    items = Items.objects.all().filter(created_by=1)
+    sellerId = request.GET.get('sellerId', default=1)
+    seller = Seller.objects.get(id=sellerId)
+    items = Items.objects.all().filter(created_by=sellerId)
     context['items'] = items
-    return render(request, 'seller/sellerinfo.html', context)
+    context['sellerId'] = sellerId
+    context['seller'] = seller
+    return render(request, 'seller/sellerProfile.html', context)
 
 
 def get_photo(request, id):
@@ -24,22 +28,55 @@ def get_photo(request, id):
     return HttpResponse(item.image, content_type=item.content_type)
 
 
-def sellersetting(request):
+def sellerSetting(request):
     context = {}
     sellerId = request.GET.get('sellerId', default='1')
     seller = Seller.objects.get(id = sellerId)
     if request.method == 'GET':
-        context['form'] = SellerForm()
-        return render(request, 'seller/sellersetting.html', context)
+        context['sellerId'] = sellerId
+        context['form'] = SellerForm(instance=seller)
+        return render(request, 'seller/sellerSetting.html', context)
 
     form = SellerForm(request.POST, request.FILES)
 
-    return render(request, 'seller/sellerinfo.html', {})
+    if not form.is_valid():
+        context['form'] = form
+        context['sellerId'] = sellerId
+        return render(request, 'seller/sellerSetting.html', context)
+
+    image = form.cleaned_data['image']
+    if image is None:
+        seller.image = seller.image
+        seller.image_content_type = seller.image_content_type
+    else:
+        seller.image_content_type = form.cleaned_data['image'].content_type
+        seller.image = image
+
+    qrcode = form.cleaned_data['qrcode']
+    if qrcode is None:
+        seller.qrcode = seller.qrcode
+        seller.qrcode_content_type = seller.qrcode_content_type
+    else:
+        seller.qrcode_content_type = form.cleaned_data['qrcode'].content_type
+        seller.qrcode = qrcode
+
+    seller.name = form.cleaned_data['name']
+    seller.address = form.cleaned_data['address']
+    seller.zip = form.cleaned_data['zip']
+    seller.desc = form.cleaned_data['desc']
+    print(seller.desc)
+    seller.save()
+
+    context['sellerId'] = sellerId
+    context['form'] = SellerForm(instance=Seller.objects.get(id=sellerId))
+    return render(request, 'seller/sellerSetting.html', context)
 
 
 def addItems(request):
     context = {}
+    sellerId = request.GET.get('sellerId', default=1)
     if request.method == 'GET':
+        context['sellerId'] = sellerId
         context['form'] = ItemForm()
         return render(request, 'seller/addItem.html', context)
 
@@ -50,7 +87,7 @@ def sellerItemDetail(request):
     context = {}
     itemId = request.GET.get('itemId', default='1')
     item = Items.objects.get(id=itemId)
-
+    sellerId = item.created_by_id
     if request.method == 'GET':
         # form = ItemDetailForm(initial={'name': item.name, 'desc': item.desc, 'price': item.price,
         #                                'unit': item.unit, 'stocks': item.stocks, 'sales': item.sales,
@@ -59,6 +96,7 @@ def sellerItemDetail(request):
         form = ItemDetailForm(instance=Items.objects.get(id=itemId))
         context['form'] = form
         context['itemId'] = itemId
+        context['sellerId'] = sellerId
         return render(request, 'seller/itemDetail.html', context)
 
     form = ItemDetailForm(request.POST, request.FILES)

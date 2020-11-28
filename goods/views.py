@@ -20,7 +20,7 @@ def get_photo(request, id):
 
 
 def list_items(request):
-    pageNum = request.GET.get('pageNum', default='1')
+    pageNum = request.GET.get('pageNum', default=1)
     orderBy = request.GET.get('orderBy', default='id')
     items = Items.objects.all().order_by(orderBy)
     recommend = list()
@@ -46,7 +46,7 @@ def list_items(request):
 
 
 def detail(request):
-    itemId = request.GET.get('itemId', defadult='1')
+    itemId = request.GET.get('itemId', default=1)
     item = Items.objects.get(id=itemId)
 
     items = Items.objects.all().order_by('id')

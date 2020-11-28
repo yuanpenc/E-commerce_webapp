@@ -9,19 +9,22 @@
                 <div>
                     <h4>Description</h4>
                     <ul>
-                        <li>Description</li>
+                        <li>{{ seller.desc }}</li>
                     </ul>
                     <h4>Address</h4>
                     <ul>
-                        <li>Address</li>
-                        <li>Zip code</li>
+                        <li>{{ seller.address }}</li>
+                    </ul>
+                    <h4>Zip Code</h4>
+                    <ul>
+                        <li>{{ seller.zip }}</li>
                     </ul>
                     <h4>QR Code</h4>
                     <ul>
-                        <li><a href="{% url 'addItems' %}">Add Items</a></li>
+                        <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
                     </ul>
                     <ul>
-                        <li><a href="{% url 'sellersetting' %}">Setting</a></li>
+                        <li><a href="sellerSetting?sellerId={{ sellerId }}">Setting</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,7 +32,7 @@
                 <h2>
                     <strong>Your Items</strong>
                 </h2>
-                <ul class="book_type_list clearfix" style="margin:0 auto; width: 1000px; position: relative">
+                <ul class="book_type_list clearfix" style="margin:0 auto; width: 800px; position: relative">
                     {% for item in items %}
                         <li>
                             <a href="itemDetail?itemId={{ item.id }}"><img src="{% url 'photoDetail' item.id %}"></a>

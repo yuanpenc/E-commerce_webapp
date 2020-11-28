@@ -18,17 +18,17 @@
                     </ul>
                     <h4>QR Code</h4>
                     <ul>
-                        <li><a href="{% url 'addItems' %}">Add Items</a></li>
+                        <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
                     </ul>
                     <ul>
-                        <li><a href="{% url 'sellersetting' %}">Setting</a></li>
+                        <li><a href="sellerSetting?sellerId={{ sellerId }}">Setting</a></li>
                     </ul>
                 </div>
             </div>
             <div class="right">
                 <h2><strong>Information</strong></h2>
                 <div class="flex">
-                    <form method="post" action="{% url 'sellersetting' %}">
+                    <form method="post" action="sellerSetting?sellerId={{ sellerId }}">
                         {% for field in form.visible_fields %}
                             <label style="position: relative; top: 8px">{{ field.label_tag }}</label>
                             <div>{{ field }}</div>
