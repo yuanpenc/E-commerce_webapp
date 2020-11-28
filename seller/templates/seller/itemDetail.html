@@ -25,22 +25,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="right" style="position: relative">
-                <h2>
-                    <strong>Your Items</strong>
-                </h2>
-                <ul class="book_type_list clearfix" style="margin:0 auto; width: 1000px; position: relative">
-                    {% for item in items %}
-                        <li>
-                            <a href="itemDetail?itemId={{ item.id }}"><img src="{% url 'photoDetail' item.id %}"></a>
-                            <h4><a href="itemDetail?itemId={{ item.id }}">{{ item.name }}</a></h4>
-                            <div class="operate">
-                                <span class="prize">$ {{ item.price }}</span>
-                                <a href="#" class="add_book" title="add_to_cart"></a>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <div class="right">
+                <h2><strong>Item details</strong></h2>
+                <img style="width: 200px" src="{% url 'photoDetail' itemId %}">
+                <div class="flex">
+                    <form method="post" action="itemDetail?itemId={{ itemId }}">
+                        {% for field in form.visible_fields %}
+                            <label style="position: relative; top: 8px">{{ field.label_tag }}</label>
+                            <div>{{ field }}</div>
+                        {% endfor %}
+                        {% csrf_token %}
+                        <div style="position: relative; top: 15px"><button type="submit">Confirm Changes</button></div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ class Items(models.Model):
     stocks = models.IntegerField(default=0)
     sales = models.IntegerField(default=0)
     detail = models.CharField(max_length=1000)
-    image = models.ImageField(upload_to='items')
+    image = models.ImageField(upload_to='items', blank=True)
     content_type = models.CharField(max_length=50, blank=True)
     status = models.SmallIntegerField(default=1, )
     created_by = models.ForeignKey(Seller, on_delete=models.CASCADE)
