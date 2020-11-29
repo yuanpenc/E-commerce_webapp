@@ -140,6 +140,23 @@
         })
     }
 
+    function buy_now(itemId) {
+        var quantity = parseFloat($('select#qty').val());
+        var totalPrice = (parseFloat($('select#qty').val()) * parseFloat(document.getElementById("price").innerText)).toFixed(2);
+        $.ajax({
+            url: "/goods/buyNow",
+            type: "GET",
+            data: {'itemId': itemId,
+                    'quantity': quantity,
+                    'totalPrice': totalPrice},
+            success: function (response) {
+                alert("Buy this item!")
+                alert(response['orderId'] + "   " + response['totalPrice'])
+                {#window.location.replace("/goods/list_items");#}
+            }
+        })
+    }
+
     {% block addScript %}
     {% endblock %}
 </script>

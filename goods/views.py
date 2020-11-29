@@ -10,6 +10,7 @@ import random
 
 # The number of items in one page
 from information.models import Cart, Profile
+from order.views import createOrder
 
 ITEMS_IN_ONE_PAGE = 15
 
@@ -172,12 +173,15 @@ def buy_now(request):
     quantity = request.GET.get('quantity')
     totalPrice = request.GET.get('totalPrice')
 
+    content = {
+        str(itemId): int(quantity)
+    }
 
+    orderId = createOrder(request, content, float(totalPrice), "", request.user)
 
-    # context = {'userId': request.user.id,
-    #            'orderId': orderId}
+    response_json = json.dumps({'orderId': orderId, 'totalPrice': totalPrice})
 
-    # return
+    return HttpResponse(response_json, content_type='application/json')
 
 
 def cart_size(request):

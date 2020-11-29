@@ -38,7 +38,8 @@ from order.models import Order
 #     context = {}
 #     return render(request, 'order/showOrder.html', context)
 
-def showOrder(request, orderid=7):
+def showOrder(request, orderid=0):
+    # orderid =
     context = {}
     # orderid = 7
     order = Order.objects.get(id=orderid)
@@ -69,7 +70,7 @@ def confirmOrder(request, orderid=7):
 # user: 总的user
 def createOrder(request, content, total_price, comment, user):
     new_order = Order(
-                      # customer=user,
+                      customer=user,
                       orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
                       content=content,
                       total_price=total_price,
