@@ -69,7 +69,7 @@ def profile_page(request):
 
 
 def pay_page(request):
-    return render(request, 'information/pay.html', {})
+    return render(request, 'information/pay.html', {'cartNum': len(Cart.objects.filter(user_id=request.user))})
 
 
 def cart_add(request):

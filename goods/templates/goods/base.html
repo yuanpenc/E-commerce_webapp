@@ -19,7 +19,7 @@
 
 {# Picture Reference: https://binxybaby.com/products/shopping-cart-hammock-coming-up-roses #}
 <body style="background: url(../static/goods/img/background.jpg) center fixed; background-size: 100%;">
-    <div class="container">
+    <div class="container" >
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
             <div class="container">
                 <div class="navbar-header">
@@ -64,10 +64,10 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-                        {% if isOrders %}
-                            <li class="active"><a href="/information"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                        {% if isOrder %}
+                            <li class="active"><a href="/order/showAllOrder"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         {% else %}
-                            <li><a href="/information"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                            <li><a href="/order/showAllOrder"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         {% endif %}
                         {% if isCart %}
                             <li class="active"><a href="/information/cart"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> {{ cartNum }}</span></a></li>
@@ -79,7 +79,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="/information">User Center</a></li>
                                     <li><a href="/information/cart">My Cart</a></li>
-                                    <li><a href="#">My Orders</a></li>
+                                    <li><a href="/order/showAllOrder">My Orders</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-header">Your Account</li>
                                     <li><a href="/information">Personal Info</a></li>
@@ -134,11 +134,11 @@
             type: "GET",
             data: {'itemId': item},
             success: function (response) {
-                alert("This item has added into your cart.")
+                alert("This item has added into your cart.");
                 location.reload();
             }
         })
-    }
+    };
 
     function buy_now(itemId) {
         var quantity = parseFloat($('select#qty').val());
@@ -150,12 +150,11 @@
                     'quantity': quantity,
                     'totalPrice': totalPrice},
             success: function (response) {
-                alert("Buy this item!")
-                alert(response['orderId'] + "   " + response['totalPrice'])
-                {#window.location.replace("/goods/list_items");#}
+                alert("You will pay this order.");
+                window.location.replace("/information/pay?orderId=" + response['orderId'] + "&total_price=" + response['totalPrice']);
             }
         })
-    }
+    };
 
     {% block addScript %}
     {% endblock %}

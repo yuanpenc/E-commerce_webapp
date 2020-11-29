@@ -177,9 +177,9 @@ def buy_now(request):
         str(itemId): int(quantity)
     }
 
-    orderId = createOrder(request, content, float(totalPrice), "", request.user)
+    orderId = createOrder(request, json.dumps(content), float(totalPrice), "", request.user)
 
-    response_json = json.dumps({'orderId': orderId, 'totalPrice': totalPrice})
+    response_json = json.dumps({"orderId": orderId, "totalPrice": totalPrice})
 
     return HttpResponse(response_json, content_type='application/json')
 
