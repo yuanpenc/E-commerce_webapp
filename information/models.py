@@ -16,9 +16,9 @@ class Profile(models.Model):
 
     picture = models.FileField(blank=True)
     content_type = models.CharField(max_length=50)
-    address = models.CharField(max_length=200)
-    birthday = models.CharField(max_length=200)
-    gender = models.CharField(max_length=200)
+    address = models.CharField(max_length=200, default="Greenfield 829 Ave, Pittsburgh, PA")
+    birthday = models.CharField(max_length=200, default="01-01-2020")
+    gender = models.CharField(max_length=200, default="male")
 
     def __unicode__(self):
         return 'id=' + str(self.id) + ',bio="' + self.bio + '"'

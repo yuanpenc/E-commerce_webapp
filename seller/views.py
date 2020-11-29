@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from seller.forms import *
 
 
-def sellerProfile(request):
+def sellerProfile(request, sellerId = 1):
     context = {}
     sellerId = request.GET.get('sellerId', default=1)
     seller = Seller.objects.get(id=sellerId)

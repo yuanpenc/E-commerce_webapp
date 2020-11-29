@@ -36,13 +36,14 @@ from order.models import Order
 #         print(i)
 #         print(desc[i])
 #     context = {}
-#     return render(request, 'order/showOrder.html', context)
+#     return render(request, 'order/showOrderDetail.html', context)
 
-def showOrder(request, orderid=0):
-    # orderid =
+def showOrderDetail(request, orderid=7):
     context = {}
     # orderid = 7
-    order = Order.objects.get(id=orderid)
+    # !!!!!!!!!!!
+    orderid = request.GET.get('orderid')
+    order = Order.objects.get(orderid=orderid)
     list = json.loads(order.content)
     order_item = []
     for i in list.keys():
@@ -54,13 +55,26 @@ def showOrder(request, orderid=0):
     context['order_item'] = order_item
     context['order'] = order
     confirmOrder(request)
-    return render(request, 'order/showOrder.html', context)
+    return render(request, 'order/showOrderDetail.html', context)
+
+
+def showAllOrder(request):
+    context = {}
+    # !!!!!
+    # order = Order.objects.all().filter(user=user)
+    order = Order.objects.all().filter(comment="asdsad")
+    print(order.count())
+    context['order_list'] = order
+    context['isOrder'] = True
+    return render(request, 'order/showAllOrder.html', context)
+
 
 def confirmOrder(request, orderid=7):
     order = Order.objects.get(id=orderid)
     order.status = 1
     order.save()
     return
+
 
 ## list['itemId'] = quantity
 ## content = json.dumps(list)
@@ -70,14 +84,14 @@ def confirmOrder(request, orderid=7):
 # user: 总的user
 def createOrder(request, content, total_price, comment, user):
     new_order = Order(
-                      customer=user,
-                      orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
-                      content=content,
-                      total_price=total_price,
-                      comment=comment)
+        # !!!!!!!!!!!!
+        # customer=user,
+        orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
+        content=content,
+        total_price=total_price,
+        comment=comment)
     new_order.save()
     return new_order.orderid
-
 
 
 def get_photo_goods(request, id):
