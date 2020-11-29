@@ -47,7 +47,7 @@ def get_related(request):
 
 @login_required
 def list_items(request):
-    pageNum = request.GET.get('pageNum', default='1')
+    pageNum = request.GET.get('pageNum', default=1)
     orderBy = request.GET.get('orderBy', default='id')
     category = request.GET.get('category', default='all')
     searchItem = request.GET.get('search', default='noSearch')
@@ -127,7 +127,7 @@ def list_items(request):
 
 @login_required
 def detail(request):
-    itemId = request.GET.get('itemId', default='1')
+    itemId = request.GET.get('itemId', default=1)
     item = Items.objects.get(id=itemId)
     category = request.GET.get('category', default='all')
 

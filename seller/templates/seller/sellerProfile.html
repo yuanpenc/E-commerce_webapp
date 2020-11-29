@@ -1,0 +1,50 @@
+{% extends "seller/base.html" %}
+{% block content %}
+        <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+            <div class="left">
+                <h3>
+                    <a href="{% url 'sellerinfo' %}"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    <span >Seller name</span>
+                </h3>
+                <div>
+                    <h4>Description</h4>
+                    <ul>
+                        <li>{{ seller.desc }}</li>
+                    </ul>
+                    <h4>Address</h4>
+                    <ul>
+                        <li>{{ seller.address }}</li>
+                    </ul>
+                    <h4>Zip Code</h4>
+                    <ul>
+                        <li>{{ seller.zip }}</li>
+                    </ul>
+                    <h4>QR Code</h4>
+                    <ul>
+                        <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="sellerSetting?sellerId={{ sellerId }}">Setting</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right" style="position: relative">
+                <h2>
+                    <strong>Your Items</strong>
+                </h2>
+                <ul class="book_type_list clearfix" style="margin:0 auto; width: 800px; position: relative">
+                    {% for item in items %}
+                        <li>
+                            <a href="itemDetail?itemId={{ item.id }}"><img style="width: 125px" src="{% url 'photoDetail' item.id %}"></a>
+                            <h4><a href="itemDetail?itemId={{ item.id }}">{{ item.name }}</a></h4>
+                            <div class="operate">
+                                <span class="prize">$ {{ item.price }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

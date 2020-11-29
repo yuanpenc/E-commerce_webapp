@@ -1,0 +1,46 @@
+{% extends "seller/base.html" %}
+{% block content %}
+    <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+        <div class="left">
+            <h3>
+                <img style="width: 125px" src="{% url 'photoDetail' item.id %}">
+                <div>{{ item.name }}</div>
+            </h3>
+        </div>
+        <div class="right">
+            <h2><strong>Order details</strong></h2>
+            <div class="flex">
+                <div>
+                    <span style="font-size: 20px">Quantity: </span>
+                    <select name="quantity" id="quantity" onchange="calculate()">
+                        <script>
+                            for (let i = 1; i <= {{ item.stocks }}; i++) {
+                                document.write("<option value='" + i + "'>" + i + "</option>");
+                            }
+                        </script>
+                    </select>
+                </div>
+            </div>
+            <div class="flex" style="position: relative; top: 20px">
+                <span style="font-size: 20px">Total Price: </span>
+                <span style="font-size: 20px" id="price">
+                    {{ item.price }}
+                </span>
+                <script>
+                    function calculate() {
+                        quantity = document.getElementById("quantity")
+                        value = quantity.value
+                        total = value * {{ item.price }}
+                        console.log(total)
+                        price = document.getElementById("price")
+                        price.innerText = total
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "seller/base.html" %}
+{% block content %}
+        <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+            <div class="left">
+                <h3>
+                    <a href="{% url 'sellerinfo' %}"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    <span >Seller name</span>
+                </h3>
+                <div>
+                    <h4>Description</h4>
+                    <ul>
+                        <li>Description</li>
+                    </ul>
+                    <h4>Address</h4>
+                    <ul>
+                        <li>Address</li>
+                        <li>Zip code</li>
+                    </ul>
+                    <h4>QR Code</h4>
+                    <ul>
+                        <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="sellerSetting?sellerId={{ sellerId }}">Setting</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <h2><strong>Add Items</strong></h2>
+                <div class="flex">
+                    <form method="post" action="addItems?sellerId={{ sellerId }}" enctype="multipart/form-data">
+                        {% for field in form.visible_fields %}
+                            <label style="position: relative; top: 8px">{{ field.label_tag }}</label>
+                            <div>{{ field }}</div>
+                            <div>{% for error in field.errors %} {{error}} {% endfor %}</div>
+                        {% endfor %}
+
+                        {% csrf_token %}
+                        <div style="position: relative; top: 15px"><button type="submit">Add Items</button></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

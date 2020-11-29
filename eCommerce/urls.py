@@ -12,5 +12,7 @@ urlpatterns = [
     path('myinfo', views.myinfo, name='myinfo'),
     path('cart', views.cart, name='cart'),
     # This path is for demo
-    path('nav_list', views.stream_action, name='nav_list')
+    path('nav_list', views.stream_action, name='nav_list'),
+# path('home', views.home_page),
+    path('order', views.seller_profile, name='order'),
 ]

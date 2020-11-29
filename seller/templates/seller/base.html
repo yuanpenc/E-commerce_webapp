@@ -14,8 +14,7 @@
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/myinfo.css"/>
 </head>
-
-<body style="background: url(../../static/eCommerce/img/background.jpg) center fixed; background-size: 100%;">
+<body style="background: url(../static/goods/img/background.jpg) center fixed; background-size: 100%;">
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
             <div class="container">
@@ -31,38 +30,35 @@
                         <li><a href="#">Service</a></li>
                     </ul>
 
-                    <form class="nav navbar-form navbar-left" role="search">
-                        <li><select class="form-control" style="width:80px;">
-                                    <option>All</option>
-                                    <option>Arts & Crafts</option>
+                    <form class="nav navbar-form navbar-left" role="search" method ="get" action="list_items">
+                        <li><select id="category" class="form-control" style="width:80px;" name="category">
+                                    <option value="all">All</option>
+                                    <option>Arts</option>
                                     <option>Automotive</option>
                                     <option>Baby</option>
                                     <option>Books</option>
                                     <option>Computers</option>
                                     <option>Electronics</option>
-                                    <option>Deals</option>
+                                    <option>Health</option>
                                     <option>Luggage</option>
                                     <option>Software</option>
                                 </select>
                         <div class="form-group">
-                            <input id="search_bar" type="text" class="form-control" placeholder="Search products..." width="50%">
+                            <input name="search" id="search_bar" list="item_list" type="text" class="form-control" autocomplete="off" placeholder="Search products..." width="50%">
+                            <datalist id="item_list"></datalist>
                         </div>
 
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button></li>
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-{#<<<<<<< HEAD:eCommerce/templates/base.html#}
-                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
-{#=======#}
 {#                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>#}
-{#>>>>>>> f02be3459ad39e95b2ff14e36f96c78bc1b98ffa:eCommerce/templates/eCommerce/base.html#}
                         <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 0</span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   Hello, Team 25! <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
+                                    <li><a href="/">User Center</a></li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
@@ -83,19 +79,38 @@
 
 
 
-{#    <div class="content">#}
-{#        <div class="container" style="width: 92%; height: 100% ;background-color: red">#}
-{#        background: rgba(255,255,255,0.85)#}
-{#            {% block content %}#}
-{#            {% endblock %}#}
-{#        </div>#}
-{#    </div>#}
     <div class="content">
-        {% block content %}
-        {% endblock %}
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
-
-
 
 </body>
 </html>
+
+<script>
+    {# Reference: https://www.cnblogs.com/shiyu404/p/6344591.html #}
+    $('input#search_bar').bind('keyup', function () {
+        var item = $('input#search_bar').val();
+        var category = $('select#category').val();
+        $.ajax({
+            url: "get_related",
+            type: "GET",
+            dataType: 'json',
+            data: {'item': item,
+                   'category': category},
+            async: false,
+            success: function (response) {
+                $('datalist#item_list').empty();
+                for (var i = 0; i < response.length; i++) {
+                    var add_options = '<option value="' + response[i] + '">'+ response[i] + '</option>';
+                    $('datalist#item_list').append(add_options);
+                }
+            }
+        })
+    });
+
+    {% block addScript %}
+    {% endblock %}
+
+</script>
