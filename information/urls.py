@@ -15,4 +15,6 @@ urlpatterns = [
     path('photo/<int:id>', g_views.get_photo, name='photo'),
     # This path is for demo
     # path('nav_list', views.stream_action, name='nav_list')
+    path('logout', views.logout, name='logout'),
+    path('addToCart', views.cart_add, name='addToCart')
 ]

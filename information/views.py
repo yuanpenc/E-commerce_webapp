@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -32,13 +33,14 @@ def myinfo(request):
             'pic': pic,
             'birthday':birthday,
             'gender':gender,
-            'address':address
+            'address':address,
+            'cartNum': cart_size(request)
         }
         return render(request, 'information/myinfo.html', context)
 
 
-def cart_add(request,itemId):
-
+def cart_add(request):
+    itemId = request.GET.get('itemId')
     cart_item = Cart.objects.filter(user_id=request.user)
     for item in cart_item:
         if int(item.goods_id) == itemId:
@@ -46,6 +48,7 @@ def cart_add(request,itemId):
     new_cart_item = Cart(user=request.user, goods=Items.objects.get(id=itemId))
     new_cart_item.save()
 
+    return HttpResponse()
 
 def cart_size(request):
     cart_item = Cart.objects.filter(user_id=request.user)
@@ -57,6 +60,7 @@ def cart_page(request):
     if request.method == 'GET':
         cart_item = Cart.objects.filter(user_id=request.user)
         context = {'cart_item': cart_item,
+                   'cartNum': cart_size(request),
                    'isCart': True}
         return render(request, 'information/cart.html', context)
 
