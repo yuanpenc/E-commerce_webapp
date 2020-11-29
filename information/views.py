@@ -14,7 +14,6 @@ from information.models import Profile, Cart
 
 @login_required
 def myinfo(request):
-
     if request.method == 'GET':
         form = EditProfileForm(instance=request.user.profile)
         profile = Profile.objects.get(user_id=request.user.id)
@@ -31,12 +30,46 @@ def myinfo(request):
         context = {
             'my_profileForm': form,
             'pic': pic,
-            'birthday':birthday,
-            'gender':gender,
-            'address':address,
+            'birthday': birthday,
+            'gender': gender,
+            'address': address,
             'cartNum': cart_size(request)
         }
         return render(request, 'information/myinfo.html', context)
+    else:
+
+
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if not form.is_valid():
+            pic = request.user.profile.picture
+            birthday = request.user.profile.birthday
+            gender = request.user.profile.gender
+            address = request.user.profile.address
+            context = {
+                'my_profileForm': form,
+                'pic': pic,
+                'birthday': birthday,
+                'gender': gender,
+                'address': address,
+                'cartNum': cart_size(request)
+            }
+            return render(request, 'information/myinfo.html', context)
+
+
+        request.user.profile.birthday = form.cleaned_data['birthday']
+        request.user.profile.gender = form.cleaned_data['gender']
+        request.user.profile.address = form.cleaned_data['address']
+        request.user.profile.save()
+        form.save()
+        return redirect(reverse('myinfo'))
+
+
+def profile_page(request):
+    return render(request, 'information/profile.html', {})
+
+
+def pay_page(request):
+    return render(request, 'information/pay.html', {'cartNum': len(Cart.objects.filter(user_id=request.user))})
 
 
 def cart_add(request):
@@ -49,6 +82,7 @@ def cart_add(request):
     new_cart_item.save()
 
     return HttpResponse()
+
 
 def cart_size(request):
     cart_item = Cart.objects.filter(user_id=request.user)
@@ -65,7 +99,6 @@ def cart_page(request):
         return render(request, 'information/cart.html', context)
 
 
-
 def profile_page(request):
     return render(request, 'information/profile.html', {})
 
@@ -76,7 +109,7 @@ def login_action(request):
     if request.method == 'GET':
         context['login_form'] = LoginForm()
         context['register_form'] = RegisterForm()
-        return render(request, 'eCommerce/login.html', context)
+        return render(request, 'information/login.html', context)
 
     # login page
     if request.POST.get("submit") == "Login":
@@ -86,7 +119,7 @@ def login_action(request):
             context['error_msg_login'] = form.errors['__all__']
             context['login_form'] = LoginForm()
             context['register_form'] = RegisterForm()
-            return render(request, 'eCommerce/login.html', context)
+            return render(request, 'information/login.html', context)
 
         # Persist a user id and a backend in the request.
         new_user = authenticate(username=form.cleaned_data['username'],
@@ -105,7 +138,7 @@ def login_action(request):
             context['error_msg_register'] = "Parameters errors"
             context['login_form'] = LoginForm()
             context['register_form'] = RegisterForm()
-            return render(request, 'eCommerce/login.html', context)
+            return render(request, 'information/login.html', context)
 
         # At this point, the form data is valid.  Register and login the user.
         new_user = User.objects.create_user(username=form.cleaned_data['username'],
@@ -131,7 +164,7 @@ def register_action(request):
     context = {}
     if request.method == "GET":
         context['form'] = RegisterForm()
-        return render(request, 'socialnetwork/register.html', context)
+        return render(request, 'information/register.html', context)
     # Creates a bound form from the request POST parameters and makes the
     # form available in the request context dictionary.
     form = RegisterForm(request.POST)
@@ -139,7 +172,7 @@ def register_action(request):
 
     # Validates the form.
     if not form.is_valid():
-        return render(request, 'socialnetwork/register.html', context)
+        return render(request, 'information/register.html', context)
 
     # At this point, the form data is valid.  Register and login the user.
     new_user = User.objects.create_user(username=form.cleaned_data['username'],
