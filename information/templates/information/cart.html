@@ -18,9 +18,10 @@
                     <tr>
                         <td class="td1">
                             <div class="inline">
-                                <input type="checkbox">
+                                <input type="checkbox" name="is_checkbox" id="is-checkbox_{{item.id}}">
+
                             </div>
-                            <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="flower"></a>
+                            <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="item_photo"></a>
                             <div class="inline-p">
                                 
                                 <p>{{item.goods.name}}</p>
@@ -29,19 +30,19 @@
                             </div>
                         </td>
                         <td>
-                            <div class="price" >20 USD</div>
+                            <div class="price"><input style="width: 60px; height: 20px;text-align: center;" type="text" id="price_{{item.id}}" value="{{item.goods.price}}" readonly /></div>
                         </td>
                         <td>
                             <div class="amount">
                                 <img  id="num-sub_{{item.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.id}})" alt="sub">
-                                <span><input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.id}}" value="1" readonly /></span>
+                                <input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.id}}" value="1" readonly />
 
                                 <img id="num-add_{{item.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.id}})" alt="add">
                             </div>
                         </td>
                         <td>
                             <div class="price"  >
-                                <input style="width: 35px; height: 20px;text-align: center;" type="text" id="cost_num_{{item.id}}" value="20" readonly />
+                                <input style="width: 70px; height: 20px;text-align: center;" type="text" id="cost_num_{{item.id}}" value="{{item.goods.price}}" readonly />
                             </div>
                         </td>
                         <td>
@@ -52,9 +53,12 @@
 
 
                 </tbody>
-        
+
             </table>
-            <center><a href="#"  style="" class="button button-caution button-rounded button-jumbo">Pay Now</a></center>
+            {% if cart_item.count == 0%}
+                    <div> No items in the cart </div>
+            {% endif %}
+            <center><a href="#"  style="" class="button button-caution button-rounded button-jumbo" onclick="pay()">Pay Now</a></center>
         <br>
         </div>
     </div>
@@ -66,21 +70,47 @@
             var num_add = document.getElementById("num-add_");
             var input_num = document.getElementById("input-num_"+id);
             var cost = document.getElementById("cost_num_"+id);
+            var price = document.getElementById("price_"+id)
             input_num.value = parseInt(input_num.value) + 1;
-            cost.value = input_num.value*20
+            cost.value = (input_num.value * parseFloat(price.value)).toFixed(2)
+
         }
 
         function sub(id){
             var num_sub = document.getElementById("num-sub_"+id);
             var input_num = document.getElementById("input-num_"+id);
             var cost = document.getElementById("cost_num_"+id);
+            var price = document.getElementById("price_"+id)
              if(input_num.value <= 1) {
                 input_num.value = 1;
             } else {
 
                 input_num.value = parseInt(input_num.value) - 1;
             }
-            cost.value = parseInt(input_num.value)*20
+            cost.value = (parseInt(input_num.value)* parseFloat(price.value)).toFixed(2)
+        }
+
+        function pay(){
+            var checkbox_list = document.getElementsByName("is_checkbox");
+            var content = new Map();
+            var cost = 0
+            for(var i = 0; i < checkbox_list.length; i++) {
+                if(checkbox_list[i].checked) {
+                    let str = checkbox_list[i].id
+                    let index = str .lastIndexOf("_")
+                    let id = str.substring(index+1,str.length)
+                    console.log(id)
+                    let amount = document.getElementById("input-num_"+id)
+                    console.log(amount.value)
+                    content.set(id,amount)
+                    cost += document.getElementById("cost_num_"+id)
+                }
+            }
+            var comment = ""
+
+            $.ajax({
+                url: "/information/pay",
+             });
         }
 
     </script>

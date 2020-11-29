@@ -1,11 +1,13 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
 
 # Create your models here.
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from goods.models import Items
 
 
@@ -17,8 +19,9 @@ class Profile(models.Model):
     picture = models.FileField(blank=True)
     content_type = models.CharField(max_length=50)
     address = models.CharField(max_length=200, default="Greenfield 829 Ave, Pittsburgh, PA")
-    birthday = models.CharField(max_length=200, default="01-01-2020")
+    birthday = models.DateTimeField(default=datetime.now)
     gender = models.CharField(max_length=200, default="male")
+
 
     def __unicode__(self):
         return 'id=' + str(self.id) + ',bio="' + self.bio + '"'

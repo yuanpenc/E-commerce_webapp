@@ -4,12 +4,15 @@ from django.contrib.auth.models import User
 
 from information.models import Profile
 
+MAX_UPLOAD_SIZE = 2500000
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20, required=True,
-                               label="Username", widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Username'}))
-    password = forms.CharField(max_length=200, label="Password", widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Password'}))
-
+                               label="Username",
+                               widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Username'}))
+    password = forms.CharField(max_length=200, label="Password",
+                               widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Password'}))
 
     def clean(self):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
@@ -28,14 +31,15 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=20,label="Username",
+    username = forms.CharField(max_length=20, label="Username",
                                widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Username'}))
     password = forms.CharField(max_length=200,
                                label='Password',
                                widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Password'}))
     confirm_password = forms.CharField(max_length=200,
                                        label='Confirm password',
-                                       widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Confirm Password'}))
+                                       widget=forms.TextInput(
+                                           attrs={'class': 'happy', 'placeholder': 'Confirm Password'}))
     email = forms.CharField(max_length=50,
                             widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Email'}))
 
@@ -69,9 +73,43 @@ class RegisterForm(forms.Form):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('picture', 'birthday','gender','address')
+        fields = ('picture', 'birthday', 'gender', 'address')
 
         widgets = {
             'picture': forms.FileInput(attrs={'id': 'id_profile_picture'}),
             'birthday': forms.TextInput(attrs={"type": "date"})
         }
+
+    # def clean_picture(self):
+    #     picture = self.cleaned_data['picture']
+    #     if not picture:
+    #         raise forms.ValidationError('You must upload a picture')
+    #     try:
+    #         if not picture or not hasattr(picture, 'content_type'):
+    #             raise forms.ValidationError('You must upload a picture')
+    #         if not picture.content_type or not picture.content_type.startswith('image'):
+    #             raise forms.ValidationError('File type is not image')
+    #         if picture.size > MAX_UPLOAD_SIZE:
+    #             raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
+    #         return picture
+    #     except:
+    #         raise forms.ValidationError("Please upload an image")
+    #
+    # def clean_birthday(self):
+    #     birthday = self.cleaned_data['birthday']
+    #     if not isinstance(birthday, str):
+    #         raise forms.ValidationError('You must provide a str')
+
+    def clean_gender(self):
+        gender = self.cleaned_data['gender']
+        if not isinstance(gender, str):
+            raise forms.ValidationError('You must provide a str')
+
+        return gender
+
+    def clean_address(self):
+        address = self.cleaned_data['address']
+        if not isinstance(address, str):
+            raise forms.ValidationError('You must provide a str')
+
+        return address

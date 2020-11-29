@@ -15,12 +15,10 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from eCommerce import views
 from information import views
 
 urlpatterns = [
-    # path('', views.stream_action),
-    path('eCommerce/', include('eCommerce.urls')),
+
     path('goods/', include('goods.urls')),
     path('', views.myinfo),
     path('information/', include('information.urls')),

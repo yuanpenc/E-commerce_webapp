@@ -4,22 +4,18 @@
             <div class="left">
                 <h3>
                     <a href="#"><img src='../static/eCommerce/img/flower.jpg'/></a>
-                    <span >My name</span>
+                    <span >{{user.username}}</span>
                 </h3>
                 <div>
                     <h4>Orders</h4>
                     <ul>
-                        <li><a href="information/cart">My Cart</a></li>
-                        <li><a href="{% url 'cart' %}">My Orders</a></li>
+                        <li><a href="{% url 'cart' %}">My Cart</a></li>
+                        <li><a href="{% url 'profile' %}">My Orders</a></li>
                     </ul>
                     <h4>Account</h4>
                     <ul>
-                        <li  class="on"><a href="{% url 'profile' %}">My profile</a></li>
-                        <li><a href="{% url 'profile' %}">My adress</a></li>
-                    </ul>
-                    <h4>Secure</h4>
-                    <ul>
-                        <li><a href="#">Settings</a></li>
+                        <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
+                        <li> <a href="{% url 'myinfo' %}">My address</a></li>
                     </ul>
                 </div>
             </div>
@@ -27,10 +23,10 @@
                 <div class="info">
                     <div style="float: left; width: 50%; height: 100%;">
                         <a href="#" class="fl"><img src='../static/eCommerce/img/flower.jpg' /></a>
-                        <p ><span>My Name</span><br><a href="mygrxx.html">modify your profile></a></p>
+                        <p ><span>{{user.username}}</span>
                     </div>
 
-                    <div style="float: right; height: 50% ; margin-top: 5px;">Yuanpenc@andrew.cmu.edu</div>
+                    <div style="float: right; height: 50% ; margin-top: 5px;">{{user.email}}</div>
                 </div>
                 <div class="bott">
                     <div >
@@ -48,15 +44,10 @@
                     <div>
                         <i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
                         <p class="fl"><span>Cart: <strong style="color: #A10000;">0</strong></span>
-                            <a href="myprod.html">Check your cart></a>
+                            <a href="{% url 'cart' %}">Check your cart></a>
                         </p>
                     </div>
-                    <div>
-                        <i class="fa fa-star fa-4x" aria-hidden="true"></i>
-                        <p class="fl"><span>Wishlist: <strong style="color: #A10000;">0</strong></span>
-                            <a href="#">Your favorite></a>
-                        </p>
-                    </div>
+
                 </div>
             </div>
         </div>
