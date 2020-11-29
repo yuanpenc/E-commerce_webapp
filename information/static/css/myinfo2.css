@@ -1,0 +1,158 @@
+.left{
+    margin: 60px 20px 60px 35px;
+    width: 20%;
+    background: #fff;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #e4e4e4;
+    float: left;
+}
+.left h3{
+    border-bottom: 1px solid #A10000;
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: normal;
+    font-size: 23px;
+}
+.left h3 span{
+    width: 70%;
+    margin: 0 auto;
+
+}
+.left h3 a img{
+    border: 5px solid black;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+.left  h4{
+    width: 50%;
+    color: #444;
+    font-size: 14px;
+    margin: 5px;
+
+}
+.left ul li a{
+    display: inline-block;
+    color: #757575;
+    width: 40%;
+    text-align: left;
+    font-size: 14px;
+}
+.right{
+    background: #fff;
+    width: 70%;
+    padding: 50px;
+    margin: 60px 20px;
+    border: 1px solid #e4e4e4;
+    float: left;
+}
+.right h2 {
+    font-size: 25px;
+    font-weight: normal;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #b3b0ac;
+    margin-bottom: 28px;
+}
+.right .flex{
+    display: flex;
+}
+.right .flex .col1{
+    flex: 1;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.right .flex .col1 a{
+    display: block;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+
+}
+
+.right .flex .col1 a img{
+    width: 90px;
+    border-radius:50%
+}
+.right .flex .col2{
+    flex: 3;
+}
+.right .flex .col2 h3 {
+    font-size: 22px;
+    padding: 25px 0 15px;
+    border-bottom: 1px solid #E6E6E6;
+}
+.right .flex .col2 h3.title{
+    padding: 0 0 36px;
+}
+
+
+.right .flex .col2 h3 input{
+    font-weight: normal;
+    font-size: 14px;
+    color: brown;
+}
+
+.right .flex .col2 div{
+    border-bottom: 1px solid #e6e6e6;
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+}
+
+.right .flex .col2 div a{
+    color: brown;
+}
+
+.fr {
+    float: right;
+}
+
+
+#backgroundPopup{
+    display:none;
+    position:fixed;
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    background:#000000;
+    border:1px solid #cecece;
+    z-index:1;
+}
+
+#popupContact{
+    display:none;
+    position:fixed;
+    position:absolute;
+    height:384px;
+    width:408px;
+    background:#FFFFFF;
+    border:2px solid #cecece;
+    z-index:2;
+    padding:12px;
+    font-size:13px;
+}
+
+#popupContact h1{
+    text-align:left;
+    color:#6FA5FD;
+    font-size:22px;
+    font-weight:700;
+    border-bottom:1px dotted #D3D3D3;
+    padding-bottom:2px;
+    margin-bottom:20px;
+}
+#popupContactClose{
+    font-size:14px;
+    line-height:14px;
+    right:6px;
+    top:4px;
+    position:absolute;
+    color:#6fa5fd;
+    font-weight:700;
+    display:block;
+}

@@ -1,5 +1,6 @@
-{% extends "eCommerce/base.html" %}
+{% extends "goods/base.html" %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css"/>
     <div class="content">
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <table class="table table-hover">
@@ -13,160 +14,75 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for item in cart_item %}
                     <tr>
                         <td class="td1">
                             <div class="inline">
                                 <input type="checkbox">
                             </div>
-                            <a href="#" class="inline-img"><img src="../static/eCommerce/img/flower.jpg" alt="flower"></a>
+                            <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="flower"></a>
                             <div class="inline-p">
                                 
-                                <p>Product name</p>
+                                <p>{{item.goods.name}}</p>
                                 
                                     
                             </div>
                         </td>
                         <td>
-                            <div class="price">20 USD</div>
+                            <div class="price" >20 USD</div>
                         </td>
                         <td>
                             <div class="amount">
-                                <img src="../static/eCommerce/img/sub.jpg" alt="sub">
-                                <span>1</span>
-                                <img src="../static/eCommerce/img/add.jpg" alt="add">
+                                <img  id="num-sub_{{item.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.id}})" alt="sub">
+                                <span><input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.id}}" value="1" readonly /></span>
+
+                                <img id="num-add_{{item.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.id}})" alt="add">
                             </div>
                         </td>
                         <td>
-                            <div class="price">20 USD</div>
+                            <div class="price"  >
+                                <input style="width: 35px; height: 20px;text-align: center;" type="text" id="cost_num_{{item.id}}" value="20" readonly />
+                            </div>
                         </td>
                         <td>
                             <div class="Button">Delete</div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="td1">
-                            <div class="inline">
-                                <input type="checkbox">
-                            </div>
-                            <a href="#" class="inline-img"><img src="../static/eCommerce/img/flower.jpg" alt="flower"></a>
-                            <div class="inline-p">
-                                
-                                <p>Product name</p>
-                                
-                                    
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="amount">
-                                <img src="../static/eCommerce/img/sub.jpg" alt="sub">
-                                <span>1</span>
-                                <img src="../static/eCommerce/img/add.jpg" alt="add">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="Button">Delete</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td1">
-                            <div class="inline">
-                                <input type="checkbox">
-                            </div>
-                            <a href="#" class="inline-img"><img src="../static/eCommerce/img/flower.jpg" alt="flower"></a>
-                            <div class="inline-p">
-                                
-                                <p>Product name</p>
-                                
-                                    
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="amount">
-                                <img src="../static/eCommerce/img/sub.jpg" alt="sub">
-                                <span>1</span>
-                                <img src="../static/eCommerce/img/add.jpg" alt="add">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="Button">Delete</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td1">
-                            <div class="inline">
-                                <input type="checkbox">
-                            </div>
-                            <a href="#" class="inline-img"><img src="../static/eCommerce/img/flower.jpg" alt="flower"></a>
-                            <div class="inline-p">
-                                
-                                <p>Product name</p>
-                                
-                                    
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="amount">
-                                <img src="../static/eCommerce/img/sub.jpg" alt="sub">
-                                <span>1</span>
-                                <img src="../static/eCommerce/img/add.jpg" alt="add">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="Button">Delete</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td1">
-                            <div class="inline">
-                                <input type="checkbox">
-                            </div>
-                            <a href="#" class="inline-img"><img src="../static/eCommerce/img/flower.jpg" alt="flower"></a>
-                            <div class="inline-p">
-                                
-                                <p>Product name</p>
-                                
-                                    
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="amount">
-                                <img src="../static/eCommerce/img/sub.jpg" alt="sub">
-                                <span>1</span>
-                                <img src="../static/eCommerce/img/add.jpg" alt="add">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="price">20 USD</div>
-                        </td>
-                        <td>
-                            <div class="Button">Delete</div>
-                        </td>
-                    </tr>
+                    {% endfor %}
+
+
                 </tbody>
         
             </table>
+            <center><a href="#"  style="" class="button button-caution button-rounded button-jumbo">Pay Now</a></center>
+        <br>
         </div>
     </div>
+
+    <script>
+
+
+        function add(id){
+            var num_add = document.getElementById("num-add_");
+            var input_num = document.getElementById("input-num_"+id);
+            var cost = document.getElementById("cost_num_"+id);
+            input_num.value = parseInt(input_num.value) + 1;
+            cost.value = input_num.value*20
+        }
+
+        function sub(id){
+            var num_sub = document.getElementById("num-sub_"+id);
+            var input_num = document.getElementById("input-num_"+id);
+            var cost = document.getElementById("cost_num_"+id);
+             if(input_num.value <= 1) {
+                input_num.value = 1;
+            } else {
+
+                input_num.value = parseInt(input_num.value) - 1;
+            }
+            cost.value = parseInt(input_num.value)*20
+        }
+
+    </script>
 
 {% endblock %}
