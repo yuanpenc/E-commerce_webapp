@@ -36,9 +36,9 @@ from order.models import Order
 #         print(i)
 #         print(desc[i])
 #     context = {}
-#     return render(request, 'order/showOrder.html', context)
+#     return render(request, 'order/showOrderDetail.html', context)
 
-def showOrder(request, orderid=7):
+def showOrderDetail(request, orderid=7):
     context = {}
     # orderid = 7
     # !!!!!!!!!!!
@@ -55,7 +55,7 @@ def showOrder(request, orderid=7):
     context['order_item'] = order_item
     context['order'] = order
     confirmOrder(request)
-    return render(request, 'order/showOrder.html', context)
+    return render(request, 'order/showOrderDetail.html', context)
 
 
 def showAllOrder(request):
