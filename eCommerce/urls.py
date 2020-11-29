@@ -14,5 +14,5 @@ urlpatterns = [
     # This path is for demo
     path('nav_list', views.stream_action, name='nav_list'),
 # path('home', views.home_page),
-    path('seller', views.seller_profile, name='seller'),
+    path('order', views.seller_profile, name='order'),
 ]

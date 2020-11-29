@@ -35,11 +35,10 @@
                 <ul class="book_type_list clearfix" style="margin:0 auto; width: 800px; position: relative">
                     {% for item in items %}
                         <li>
-                            <a href="itemDetail?itemId={{ item.id }}"><img src="{% url 'photoDetail' item.id %}"></a>
+                            <a href="itemDetail?itemId={{ item.id }}"><img style="width: 125px" src="{% url 'photoDetail' item.id %}"></a>
                             <h4><a href="itemDetail?itemId={{ item.id }}">{{ item.name }}</a></h4>
                             <div class="operate">
                                 <span class="prize">$ {{ item.price }}</span>
-                                <a href="#" class="add_book" title="add_to_cart"></a>
                             </div>
                         </li>
                     {% endfor %}

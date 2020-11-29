@@ -28,7 +28,7 @@
             <div class="right">
                 <h2><strong>Information</strong></h2>
                 <div class="flex">
-                    <form method="post" action="sellerSetting?sellerId={{ sellerId }}">
+                    <form method="post" action="sellerSetting?sellerId={{ sellerId }}" enctype="multipart/form-data">
                         {% for field in form.visible_fields %}
                             <label style="position: relative; top: 8px">{{ field.label_tag }}</label>
                             <div>{{ field }}</div>

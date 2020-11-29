@@ -16,7 +16,7 @@ def sellerProfile(request):
     return render(request, 'seller/sellerProfile.html', context)
 
 
-def get_photo(request, id):
+def get_photo_goods(request, id):
     item = get_object_or_404(Items, id=id)
     # print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
 
@@ -64,7 +64,6 @@ def sellerSetting(request):
     seller.address = form.cleaned_data['address']
     seller.zip = form.cleaned_data['zip']
     seller.desc = form.cleaned_data['desc']
-    print(seller.desc)
     seller.save()
 
     context['sellerId'] = sellerId
@@ -80,7 +79,39 @@ def addItems(request):
         context['form'] = ItemForm()
         return render(request, 'seller/addItem.html', context)
 
-    return render(request, 'seller/addItem.html', {})
+    form = ItemForm(request.POST, request.FILES)
+    if not form.is_valid():
+        context['form'] = form
+        context['sellerId'] = sellerId
+        return render(request, 'seller/addItem.html', context)
+
+    new_item = Items(name=form.cleaned_data['name'],
+                 desc=form.cleaned_data['desc'],
+                 price=form.cleaned_data['price'],
+                 unit=form.cleaned_data['unit'],
+                 stocks=form.cleaned_data['stocks'],
+                 sales=0,
+                 detail=form.cleaned_data['detail'],
+                 image=form.cleaned_data['image'],
+                 status=1,
+                 created_by=Seller.objects.get(id=sellerId),
+                 category=form.cleaned_data['category'])
+    print(form.cleaned_data['name'])
+    print('Uploaded picture: {} (type={})'.format(form.cleaned_data['image'], type(form.cleaned_data['image'])))
+
+
+    new_item.content_type = form.cleaned_data['image'].content_type
+    new_item.save()
+    return sellerProfile(request)
+
+
+def deleteItems(request):
+    itemId = request.GET.get('itemId')
+    item = get_object_or_404(Items, id=itemId)
+    item.image.delete()
+    item.delete()
+    return sellerProfile(request)
+
 
 
 def sellerItemDetail(request):

@@ -67,6 +67,28 @@ class ItemForm(forms.ModelForm):
             'desc': "Description"
         }
 
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price < 0:
+            raise forms.ValidationError('Price should be positive.')
+        return price
+
+    def clean_stocks(self):
+        stocks = self.cleaned_data['stocks']
+        if stocks < 0:
+            raise forms.ValidationError('Stocks should be positive.')
+        return stocks
+    
+    def clean_image(self, MAX_UPLOAD_SIZE=2500000):
+        picture = self.cleaned_data['image']
+        if not picture or not hasattr(picture, 'content_type'):
+            raise forms.ValidationError('You must upload a picture')
+        if not picture.content_type or not picture.content_type.startswith('image'):
+            raise forms.ValidationError('File type is not image')
+        if picture.size > MAX_UPLOAD_SIZE:
+            raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
+        return picture
+
 
 class ItemDetailForm(forms.ModelForm):
     class Meta:
