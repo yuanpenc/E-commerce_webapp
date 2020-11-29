@@ -1,6 +1,7 @@
 import json
 import math
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404
 
@@ -8,9 +9,12 @@ from goods.models import Items
 import random
 
 # The number of items in one page
+from information.models import Cart
+
 ITEMS_IN_ONE_PAGE = 15
 
 
+@login_required
 def get_photo(request, id):
     item = get_object_or_404(Items, id=id)
     print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
@@ -23,6 +27,7 @@ def get_photo(request, id):
     return HttpResponse(item.image, content_type=item.content_type)
 
 
+@login_required
 def get_related(request):
     # filter item names based on related input information
     category = request.GET.get('category', default='all')
@@ -40,6 +45,7 @@ def get_related(request):
     return HttpResponse(response_json, content_type='application/json')
 
 
+@login_required
 def list_items(request):
     pageNum = request.GET.get('pageNum', default='1')
     orderBy = request.GET.get('orderBy', default='id')
@@ -110,12 +116,13 @@ def list_items(request):
                'search': searchItem,
                'category': category,
                'isHome': True,
-               'cartNum': 0,
+               'cartNum': cart_size(request),
                'curPage': int(pageNum)}
 
     return render(request, 'goods/list_items_demo.html', context)
 
 
+@login_required
 def detail(request):
     itemId = request.GET.get('itemId', default='1')
     item = Items.objects.get(id=itemId)
@@ -142,12 +149,18 @@ def detail(request):
 
     # organize response context
     context = {'item': item,
-               'cartNum': 0,
+               'cartNum': cart_size(request),
                'recommend': recommend}
 
     return render(request, 'goods/item_detail_demo.html', context)
 
 
+@login_required
 def service(request):
     return render(request, 'goods/service.html', {'isService': True,
-                                                  'cartNum': 0})
+                                                  'cartNum': cart_size(request)})
+
+
+def cart_size(request):
+    cart_item = Cart.objects.filter(user_id=request.user)
+    return len(cart_item)
