@@ -10,6 +10,11 @@ from eCommerce.forms import RegisterForm, LoginForm
 
 
 
+@login_required
+def stream_action(request):
+    return render(request, 'eCommerce/base.html', {})
+    # logout(request)
+    # return HttpResponse("hello world")
 def list(request):
     return render(request, 'eCommerce/list_items.html', {})
 
@@ -114,3 +119,7 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
+
+
+def seller_profile(request):
+    return render(request, 'eCommerce/seller_profile.html', {})

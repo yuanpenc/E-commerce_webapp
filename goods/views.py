@@ -9,7 +9,8 @@ from goods.models import Items
 import random
 
 # The number of items in one page
-from information.models import Cart
+from information.models import Cart, Profile
+from order.views import createOrder
 
 ITEMS_IN_ONE_PAGE = 15
 
@@ -47,7 +48,7 @@ def get_related(request):
 
 @login_required
 def list_items(request):
-    pageNum = request.GET.get('pageNum', default='1')
+    pageNum = request.GET.get('pageNum', default=1)
     orderBy = request.GET.get('orderBy', default='id')
     category = request.GET.get('category', default='all')
     searchItem = request.GET.get('search', default='noSearch')
@@ -103,8 +104,11 @@ def list_items(request):
     # organize response context
     start = (int(pageNum) - 1) * ITEMS_IN_ONE_PAGE
     end = start + ITEMS_IN_ONE_PAGE
+
+    print(request.user.first_name + " " + request.user.last_name)
+
     context = {'items': items[start:end],
-               'user': request.user,
+               'user': request.user.username,
                'recommend': recommend,
                'nums': numOfItems,
                'prePage': int(pageNum) - 1,
@@ -124,7 +128,7 @@ def list_items(request):
 
 @login_required
 def detail(request):
-    itemId = request.GET.get('itemId', default='1')
+    itemId = request.GET.get('itemId', default=1)
     item = Items.objects.get(id=itemId)
     category = request.GET.get('category', default='all')
 
@@ -150,6 +154,7 @@ def detail(request):
     # organize response context
     context = {'item': item,
                'cartNum': cart_size(request),
+               'user': request.user.username,
                'recommend': recommend}
 
     return render(request, 'goods/item_detail_demo.html', context)
@@ -158,7 +163,25 @@ def detail(request):
 @login_required
 def service(request):
     return render(request, 'goods/service.html', {'isService': True,
+                                                  'user': request.user.username,
                                                   'cartNum': cart_size(request)})
+
+
+@login_required
+def buy_now(request):
+    itemId = request.GET.get('itemId')
+    quantity = request.GET.get('quantity')
+    totalPrice = request.GET.get('totalPrice')
+
+    content = {
+        str(itemId): int(quantity)
+    }
+
+    orderId = createOrder(request, content, float(totalPrice), "", request.user)
+
+    response_json = json.dumps({'orderId': orderId, 'totalPrice': totalPrice})
+
+    return HttpResponse(response_json, content_type='application/json')
 
 
 def cart_size(request):

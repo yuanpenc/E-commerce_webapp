@@ -14,8 +14,7 @@
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/myinfo.css"/>
 </head>
-
-<body style="background: url(../../static/eCommerce/img/background.jpg) center fixed; background-size: 100%;">
+<body style="background: url(../static/goods/img/background.jpg) center fixed; background-size: 100%;">
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
             <div class="container">
@@ -52,17 +51,13 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-{#<<<<<<< HEAD:eCommerce/templates/base.html#}
-                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>
-{#=======#}
 {#                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>#}
-{#>>>>>>> f02be3459ad39e95b2ff14e36f96c78bc1b98ffa:eCommerce/templates/eCommerce/base.html#}
                         <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
                         <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 0</span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   Hello, Team 25! <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
+                                    <li><a href="/">User Center</a></li>
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
@@ -83,19 +78,11 @@
 
 
 
-{#    <div class="content">#}
-{#        <div class="container" style="width: 92%; height: 100% ;background-color: red">#}
-{#        background: rgba(255,255,255,0.85)#}
-{#            {% block content %}#}
-{#            {% endblock %}#}
-{#        </div>#}
-{#    </div>#}
     <div class="content">
-        {% block content %}
-        {% endblock %}
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
-
-
 
 </body>
 </html>

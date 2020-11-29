@@ -1,0 +1,19 @@
+{% extends "seller/base.html" %}
+{% block content %}
+    <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+    <form method="post" action="addOrder">
+        {% for item in form.visible_fields %}
+            <label>{{ item.label }}</label>
+            {{ item }}
+        {% endfor %}
+        {% csrf_token %}
+        <button type="submit">add</button>
+    </form>
+
+    </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

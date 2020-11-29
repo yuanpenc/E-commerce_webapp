@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20, required=True,
                                label="Username", widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Username'}))
-    password = forms.CharField(max_length=200, label="Password", widget=forms.TextInput(attrs={'class': 'happy', 'placeholder': 'Password'}))
+    password = forms.CharField(max_length=200, label="Password", widget=forms.PasswordInput(attrs={'class': 'happy', 'placeholder': 'Password'}))
 
 
     def clean(self):
