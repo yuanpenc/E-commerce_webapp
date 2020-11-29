@@ -10,7 +10,8 @@ from django.urls import reverse
 from goods.models import Items
 from information.forms import LoginForm, RegisterForm, EditProfileForm
 from information.models import Profile, Cart
-
+from order.views import createOrder
+import json
 
 @login_required
 def myinfo(request):
@@ -38,7 +39,6 @@ def myinfo(request):
         return render(request, 'information/myinfo.html', context)
     else:
 
-
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if not form.is_valid():
             pic = request.user.profile.picture
@@ -55,7 +55,6 @@ def myinfo(request):
             }
             return render(request, 'information/myinfo.html', context)
 
-
         request.user.profile.birthday = form.cleaned_data['birthday']
         request.user.profile.gender = form.cleaned_data['gender']
         request.user.profile.address = form.cleaned_data['address']
@@ -68,7 +67,21 @@ def profile_page(request):
     return render(request, 'information/profile.html', {})
 
 
+def create_order_pre_pay(request):
+    total_price = request.GET.get("total_price")
+    content = request.GET.get("content")
+    if content is None:
+        content = {}
+    # content = json.dump(content)
+    orderId = createOrder(request, content, float(total_price),"",request.user)
+    response_json = json.dumps({'orderId': orderId, 'totalPrice': total_price})
+    return HttpResponse(response_json, content_type='application/json')
+
+
 def pay_page(request):
+    orderId = request.GET.get("orderId")
+    total_price = request.GET.get("total_price")
+
     return render(request, 'information/pay.html', {})
 
 
@@ -97,10 +110,6 @@ def cart_page(request):
                    'cartNum': cart_size(request),
                    'isCart': True}
         return render(request, 'information/cart.html', context)
-
-
-def profile_page(request):
-    return render(request, 'information/profile.html', {})
 
 
 def login_action(request):

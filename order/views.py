@@ -85,7 +85,7 @@ def confirmOrder(request, orderid=7):
 def createOrder(request, content, total_price, comment, user):
     new_order = Order(
         # !!!!!!!!!!!!
-        # customer=user,
+        customer=user,
         orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
         content=content,
         total_price=total_price,
