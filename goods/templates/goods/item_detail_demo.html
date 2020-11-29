@@ -72,7 +72,6 @@
             <div class="r_wrap fr clearfix">
                 <ul class="detail_tab clearfix">
                     <li class="active">Product Description</li>
-                    <li>Comment</li>
                 </ul>
 
                 <div class="tab_content">
@@ -97,17 +96,4 @@
             calTotal();
         })
     })
-
-    function add_to_cart() {
-        var item = $('input#itemId').val();
-        $.ajax({
-            url: "/information/addToCart",
-            type: "GET",
-            data: {'itemId': item},
-            success: function (response) {
-                alert("This item has added into your cart.")
-                location.reload();
-            }
-        })
-    }
 {% endblock %}

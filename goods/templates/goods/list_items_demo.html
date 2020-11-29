@@ -23,7 +23,7 @@
                                 <h4><a href="item_detail?itemId={{ rec.id }}&category={{ category }}">{{ rec.name }}</a></h4>
                                 <div class="operate">
                                     <span class="prize">$ {{ rec.price }}</span>
-                                    <a href="#" class="add_book" title="add_to_cart"></a>
+                                    <a class="add_book" title="add_to_cart" onclick="add_to_cart()"></a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -63,7 +63,7 @@
                                 <h4><a href="item_detail?itemId={{ item.id }}&category={{ category }}">{{ item.name }}</a></h4>
                                 <div class="operate">
                                     <span class="prize">$ {{ item.price }}</span>
-                                    <a href="#" class="add_book" title="add_to_cart"></a>
+                                    <a class="add_book" title="add_to_cart" onclick="add_to_cart_by_id({{ item.id }})"></a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -92,4 +92,16 @@
     </div>
 {% endblock %}
 
-
+{% block addScript %}
+    function add_to_cart_by_id(item) {
+        $.ajax({
+            url: "/information/addToCart",
+            type: "GET",
+            data: {'itemId': item},
+            success: function (response) {
+                alert("This item has added into your cart.")
+                location.reload();
+            }
+        })
+    }
+{% endblock %}
