@@ -10,7 +10,7 @@ from seller.models import Seller
 
 
 class Order(models.Model):
-    # customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True)
     orderid = models.CharField(max_length=500)
     content = models.CharField(max_length=500, blank=True)

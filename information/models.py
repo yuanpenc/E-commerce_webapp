@@ -20,7 +20,6 @@ class Profile(models.Model):
     birthday = models.CharField(max_length=200, default="01-01-2020")
     gender = models.CharField(max_length=200, default="male")
 
-
     def __unicode__(self):
         return 'id=' + str(self.id) + ',bio="' + self.bio + '"'
 
