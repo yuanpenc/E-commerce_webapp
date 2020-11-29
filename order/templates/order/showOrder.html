@@ -1,12 +1,83 @@
-{% extends "seller/base.html" %}
+{% extends "goods/base.html" %}
 {% block content %}
-    <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css"/>
+    <div class="content">
+        <div class="container" style="width: 92%; height: 100%; margin-top: 0px; background: rgba(255,255,255,0.85)">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_item %}
+                    <tr>
+                        <td class="td1">
+{#                            <div class="inline">#}
+{#                                <input type="checkbox">#}
+{#                            </div>#}
+                            <a href="#" class="inline-img"><img style="width: 125px" src="{% url 'photoDetail' item.item.id %}"></a>
+                            <div class="inline-p">
+
+                                <p>{{item.goods.name}}</p>
 
 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price" style="position: relative; top: 35px">{{ item.item.price }}</div>
+                        </td>
+                        <td>
+                            <div class="amount" style="position: relative; left: 20px; top: 35px">
+                                {{ item.quantity }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price" style="position: relative; top: 35px;">
+                                {{ item.price }}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+            <hr style="border-color: black">
+            <div style="display: flex; justify-content: center; align-items: center">
+                <h2>Total Price: {{ order.total_price }}</h2>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
+
+    <script>
 
 
+        function add(id){
+            var num_add = document.getElementById("num-add_");
+            var input_num = document.getElementById("input-num_"+id);
+            var cost = document.getElementById("cost_num_"+id);
+            input_num.value = parseInt(input_num.value) + 1;
+            cost.value = input_num.value*20
+        }
+
+        function sub(id){
+            var num_sub = document.getElementById("num-sub_"+id);
+            var input_num = document.getElementById("input-num_"+id);
+            var cost = document.getElementById("cost_num_"+id);
+             if(input_num.value <= 1) {
+                input_num.value = 1;
+            } else {
+
+                input_num.value = parseInt(input_num.value) - 1;
+            }
+            cost.value = parseInt(input_num.value)*20
+        }
+
+    </script>
 
 {% endblock %}

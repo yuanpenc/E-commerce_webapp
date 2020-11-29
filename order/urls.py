@@ -4,7 +4,8 @@ from django.urls import path
 from order import views
 
 urlpatterns = [
-    path('', views.addOrder),
-    path('addOrder', views.addOrder),
+    path('', views.showOrder),
+    path('addOrder', views.createOrder),
     path('showOrder', views.showOrder),
+    path('photo/<int:id>', views.get_photo_goods, name='photoDetail'),
 ]

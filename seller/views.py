@@ -15,6 +15,11 @@ def sellerProfile(request):
     context['seller'] = seller
     return render(request, 'seller/sellerProfile.html', context)
 
+def createSeller(request):
+    new_Seller = Seller(user=request.user,
+                        name=request.user.first_name + " " + request.user.last_name)
+    return new_Seller
+
 
 def get_photo_goods(request, id):
     item = get_object_or_404(Items, id=id)

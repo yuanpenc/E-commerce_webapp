@@ -25,18 +25,41 @@ from order.forms import OrderForm
 from order.models import Order
 
 
-def showOrder(request):
-    orderid = 7
-    order = Order.objects.get(id=orderid)
-    asd = order.desc
-    print(asd)
-    print("-0-0--0-0--0-")
-    desc = json.loads(asd)
-    for i in desc.keys():
-        print(i)
-        print(desc[i])
+# def showOrder(request):
+#     orderid = 7
+#     order = Order.objects.get(id=orderid)
+#     asd = order.content
+#     print(asd)
+#     print("-0-0--0-0--0-")
+#     desc = json.loads(asd)
+#     for i in desc.keys():
+#         print(i)
+#         print(desc[i])
+#     context = {}
+#     return render(request, 'order/showOrder.html', context)
+
+def showOrder(request, orderid=7):
     context = {}
-    return render(request, 'order/addOrder.html', context)
+    # orderid = 7
+    order = Order.objects.get(id=orderid)
+    list = json.loads(order.content)
+    order_item = []
+    for i in list.keys():
+        item = {}
+        item['item'] = Items.objects.get(id=i)
+        item['quantity'] = list.get(i)
+        item['price'] = item['item'].price * item['quantity']
+        order_item.append(item)
+    context['order_item'] = order_item
+    context['order'] = order
+    confirmOrder(request)
+    return render(request, 'order/showOrder.html', context)
+
+def confirmOrder(request, orderid=7):
+    order = Order.objects.get(id=orderid)
+    order.status = 1
+    order.save()
+    return
 
 ## list['itemId'] = quantity
 ## content = json.dumps(list)
@@ -45,7 +68,8 @@ def showOrder(request):
 # comment: 订单评论
 # user: 总的user
 def createOrder(request, content, total_price, comment, user):
-    new_order = Order(customer=user,
+    new_order = Order(
+                      # customer=user,
                       orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
                       content=content,
                       total_price=total_price,
