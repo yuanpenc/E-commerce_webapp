@@ -1,0 +1,80 @@
+{% extends "goods/base.html" %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css"/>
+    <div class="content">
+        <div class="container" style="width: 92%; height: 100%; margin-top: 0px; background: rgba(255,255,255,0.85)">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    {#                        <th>Cost</th>#}
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in order_list %}
+                    <tr onclick="jumpTo({{ order.orderid }})">
+                        <td>
+                            <div style="width: 90px">{{ order.orderid }}</div>
+                        </td>
+                        <td>
+                            <div>{{ order.total_price }}</div>
+                        </td>
+                        <td>
+                            <div>{{ order.status }}</div>
+                        </td>
+                    </tr>
+                    {#                    <tr>#}
+                    {#                        <td1></td1>#}
+                    {#                        <td>#}
+                    {#                            <div class="price" style="position: relative; top: 35px">{{ order.orderid }}</div>#}
+                    {#                        </td>#}
+                    {#                        <td>#}
+                    {#                            <div class="amount" style="position: relative; left: 20px; top: 35px">#}
+                    {#                                {{ order.total_price }}#}
+                    {#                            </div>#}
+                    {#                        </td>#}
+                    {#                        <td>#}
+                    {#                            <div class="price" style="position: relative; top: 35px;">#}
+                    {#                                {{ order.status }}#}
+                    {#                            </div>#}
+                    {#                        </td>#}
+                    {#                    </tr>#}
+                {% endfor %}
+                </tbody>
+
+            </table>
+            <hr style="border-color: black">
+        </div>
+    </div>
+
+    <script>
+        function jumpTo(number) {
+            window.location.href = "showOrder?orderid=" + number
+        }
+
+        function add(id) {
+            var num_add = document.getElementById("num-add_");
+            var input_num = document.getElementById("input-num_" + id);
+            var cost = document.getElementById("cost_num_" + id);
+            input_num.value = parseInt(input_num.value) + 1;
+            cost.value = input_num.value * 20
+        }
+
+        function sub(id) {
+            var num_sub = document.getElementById("num-sub_" + id);
+            var input_num = document.getElementById("input-num_" + id);
+            var cost = document.getElementById("cost_num_" + id);
+            if (input_num.value <= 1) {
+                input_num.value = 1;
+            } else {
+
+                input_num.value = parseInt(input_num.value) - 1;
+            }
+            cost.value = parseInt(input_num.value) * 20
+        }
+
+    </script>
+
+{% endblock %}

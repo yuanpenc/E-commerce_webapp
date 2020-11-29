@@ -15,6 +15,6 @@ class Order(models.Model):
     orderid = models.CharField(max_length=500)
     content = models.CharField(max_length=500, blank=True)
     total_price = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    comment = models.CharField(max_length=100, blank=True)
+    comment = models.CharField(max_length=100, blank=True, null=True)
     status = models.BooleanField(default=False)
 
