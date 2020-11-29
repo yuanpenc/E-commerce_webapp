@@ -16,9 +16,6 @@
                     {% for item in order_item %}
                     <tr>
                         <td class="td1">
-{#                            <div class="inline">#}
-{#                                <input type="checkbox">#}
-{#                            </div>#}
                             <a href="#" class="inline-img"><img style="width: 125px" src="{% url 'photoDetail' item.item.id %}"></a>
                             <div class="inline-p">
 
@@ -43,14 +40,15 @@
                     </tr>
                     {% endfor %}
 
-
                 </tbody>
 
             </table>
             <hr style="border-color: black">
             <div style="display: flex; justify-content: center; align-items: center">
                 <h2>Total Price: {{ order.total_price }}</h2>
+{#                <button>Confirm Order</button>#}
             </div>
+
         </div>
     </div>
 

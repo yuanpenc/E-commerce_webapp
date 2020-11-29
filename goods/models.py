@@ -14,10 +14,8 @@ class Items(models.Model):
     detail = models.CharField(max_length=1000)
     image = models.ImageField(upload_to='items', blank=True)
     content_type = models.CharField(max_length=50, blank=True)
-    # status = models.SmallIntegerField(default=1, )
-    # created_by = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    status = models.SmallIntegerField(default=1,)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="item_creators")
+    status = models.SmallIntegerField(default=1, )
+    created_by = models.ForeignKey(Seller, on_delete=models.CASCADE)
     category = models.CharField(max_length=20)
 
 
