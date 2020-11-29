@@ -37,6 +37,10 @@ def myinfo(request):
         return render(request, 'information/myinfo.html', context)
 
 
+def profile(request):
+    return render(request, 'information/profile.html', {})
+
+
 def cart_add(request,itemId):
 
     cart_item = Cart.objects.filter(user_id=request.user)

@@ -7,10 +7,7 @@ from django.urls import reverse
 
 from eCommerce.forms import RegisterForm, LoginForm
 
-@login_required
-def stream_action(request):
-    logout(request)
-    return render(request, 'eCommerce/nav.html', {})
+
 
 
 def list(request):

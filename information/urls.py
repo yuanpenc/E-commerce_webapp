@@ -9,8 +9,8 @@ urlpatterns = [
     path('login', views.login_action, name='login'),
     # path('item_detail', views.detail, name='item_detail'),
     # path('list_items', views.list, name='list_items'),
-    # path('profile', views.profile, name='profile'),
-    # path('myinfo', views.myinfo, name='myinfo'),
+    path('profile', views.profile, name='profile'),
+    path('myinfo', views.myinfo, name='myinfo'),
     path('cart', views.cart_page, name='cart'),
     path('photo/<int:id>', g_views.get_photo, name='photo'),
     # This path is for demo

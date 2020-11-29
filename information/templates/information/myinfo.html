@@ -6,22 +6,18 @@
             <div class="left">
                 <h3>
                     <a href="#"><img src="../static/eCommerce/img/flower.jpg"/></a>
-                    <span >My name</span>
+                    <span >{{user.username}}</span>
                 </h3>
                 <div>
                     <h4>Orders</h4>
                     <ul>
                         <li><a href="{% url 'cart' %}">My Cart</a></li>
-                        <li><a href="{% url 'cart' %}">My Orders</a></li>
+                        <li><a href="{% url 'profile' %}">My Orders</a></li>
                     </ul>
                     <h4>Account</h4>
                     <ul>
-                        <li  class="on"><a href="{% url 'profile' %}">My profile</a></li>
-                        <li><a href="{% url 'profile' %}">My adress</a></li>
-                    </ul>
-                    <h4>Secure</h4>
-                    <ul>
-                        <li><a href="#">Settings</a></li>
+                        <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
+                        <li><a href="{% url 'myinfo' %}">My adress</a></li>
                     </ul>
                 </div>
             </div>
