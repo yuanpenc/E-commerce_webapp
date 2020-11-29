@@ -61,8 +61,8 @@ def showOrderDetail(request, orderid=7):
 def showAllOrder(request):
     context = {}
     # !!!!!
-    # order = Order.objects.all().filter(user=user)
-    order = Order.objects.all().filter(comment="asdsad")
+    order = Order.objects.all().filter(customer=request.user)
+    # order = Order.objects.all().filter(comment="asdsad")
     print(order.count())
     context['order_list'] = order
     context['isOrder'] = True
@@ -85,7 +85,7 @@ def confirmOrder(request, orderid=7):
 def createOrder(request, content, total_price, comment, user):
     new_order = Order(
         # !!!!!!!!!!!!
-        # customer=user,
+        customer=user,
         orderid=str(datetime.datetime.utcnow().timestamp()).replace(".", ""),
         content=content,
         total_price=total_price,
