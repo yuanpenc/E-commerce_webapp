@@ -21,6 +21,7 @@ import json
 #         return render(request, 'order/orderPage.html', context)
 #
 #     return render(request, 'order/orderPage.html', {})
+from information.models import Cart
 from order.forms import OrderForm
 from order.models import Order
 
@@ -54,26 +55,29 @@ def showOrderDetail(request, orderid=7):
         order_item.append(item)
     context['order_item'] = order_item
     context['order'] = order
-    confirmOrder(request)
+    context['isOrder'] = True
+    context['cartNum'] = len(Cart.objects.filter(user_id=request.user))
+    # confirmOrder(request)
     return render(request, 'order/showOrderDetail.html', context)
 
 
 def showAllOrder(request):
     context = {}
     # !!!!!
-    # order = Order.objects.all().filter(user=user)
-    order = Order.objects.all().filter(comment="asdsad")
+    order = Order.objects.all().filter(customer=request.user)
+    # order = Order.objects.all().filter(comment="asdsad")
     print(order.count())
     context['order_list'] = order
     context['isOrder'] = True
+    context['cartNum'] = len(Cart.objects.filter(user_id=request.user))
     return render(request, 'order/showAllOrder.html', context)
 
 
-def confirmOrder(request, orderid=7):
-    order = Order.objects.get(id=orderid)
-    order.status = 1
-    order.save()
-    return
+# def confirmOrder(request, orderid=7):
+#     order = Order.objects.get(id=orderid)
+#     order.status = 1
+#     order.save()
+#     return
 
 
 ## list['itemId'] = quantity

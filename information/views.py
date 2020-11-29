@@ -79,10 +79,16 @@ def create_order_pre_pay(request):
 
 
 def pay_page(request):
+
     orderId = request.GET.get("orderId")
     total_price = request.GET.get("total_price")
+    content = {
+        'cartNum': len(Cart.objects.filter(user_id=request.user)),
+        'orderId':orderId,
+        'total_price':total_price
+    }
+    return render(request, 'information/pay.html', content)
 
-    return render(request, 'information/pay.html', {})
 
 
 def cart_add(request):
