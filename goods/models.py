@@ -16,10 +16,9 @@ class Items(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="item_creators")
     category = models.CharField(max_length=20)
 
+
 class Comment(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="comment_creators")
     content = models.CharField(max_length=500)
     creation_time = models.DateTimeField()
     belong_to = models.ForeignKey(Items, on_delete=models.PROTECT, related_name="item_comments")
-
-

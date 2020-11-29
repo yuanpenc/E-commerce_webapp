@@ -15,7 +15,6 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from eCommerce import views
 from information import views
 
 urlpatterns = [

@@ -30,7 +30,7 @@
                     <div class="col2">
                         <h3 class="title"><strong style="float: left;">Personal info</strong><input id="button" class= "fr" type="submit" value="edit" /></h3>
 							<div>Name: {{user.username}}</div>
-							<div>Birthday：{{birthday}}</div>
+							<div>Birthday：{{birthday|date:"Y-m-d"}}</div>
 							<div>Gender：{{gender}}</div>
 							<h3>Default Address</h3>
 							<div><span class="fl">{{address}}</span></div>
@@ -41,8 +41,7 @@
             <div id="popupContact">
                 <a style="color: brown;" id="popupContactClose">X</a>
                 <h1 style="color: brown;">Update your information</h1>
-                    <form action="#" method="get">
-<!--                        <p><label>Username：</label>{{my_profileForm.birthday}}</p>-->
+                    <form action="{% url 'myinfo' %}" method="POST">
                         <p><label>Birthday：</label>{{my_profileForm.birthday}}</p>
                         <p>
                             <label>Gender：</label>
@@ -50,9 +49,9 @@
                         </p>
                          <p><label>Address：</label>{{my_profileForm.address}}</p>
                         <div >
-                            <input type="button" value="Submit"  />
+                            <button id="id_post_button" type="submit" >Post</button>
                         </div>
-
+                        {% csrf_token %}
                     </form>
 
             </div>
