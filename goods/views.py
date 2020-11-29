@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from goods.models import Items
 import random
 
+# The number of items in one page
 ITEMS_IN_ONE_PAGE = 15
 
 
@@ -23,6 +24,7 @@ def get_photo(request, id):
 
 
 def get_related(request):
+    # filter item names based on related input information
     category = request.GET.get('category', default='all')
     if category == "all":
         items = Items.objects.all()
@@ -33,6 +35,7 @@ def get_related(request):
     for item in items:
         response_data.append(item.name)
 
+    # organize item names in json format
     response_json = json.dumps(response_data)
     return HttpResponse(response_json, content_type='application/json')
 
@@ -42,6 +45,8 @@ def list_items(request):
     orderBy = request.GET.get('orderBy', default='id')
     category = request.GET.get('category', default='all')
     searchItem = request.GET.get('search', default='noSearch')
+
+    # filter items based on related input information
     if category == "all":
         items = Items.objects.all().order_by(orderBy)
     else:
@@ -51,14 +56,13 @@ def list_items(request):
         newItems = []
         for item in items:
             name = item.name
-            print(name)
             if searchItem in name.lower():
-                print("here")
                 newItems.append(item)
         items = newItems
 
     recommend = list()
 
+    # get recommend items
     numOfItems = len(items)
     if numOfItems <= 2:
         recommend = items
@@ -72,6 +76,7 @@ def list_items(request):
 
     lastPageNum = math.ceil(numOfItems / ITEMS_IN_ONE_PAGE);
 
+    # numbers show on page directory
     numOfPagesList = []
     if 1 <= int(pageNum) <= 3:
         count = 1
@@ -89,6 +94,7 @@ def list_items(request):
         else:
             numOfPagesList = [lastPageNum - 4, lastPageNum - 3, lastPageNum - 2, lastPageNum - 1, lastPageNum]
 
+    # organize response context
     start = (int(pageNum) - 1) * ITEMS_IN_ONE_PAGE
     end = start + ITEMS_IN_ONE_PAGE
     context = {'items': items[start:end],
@@ -103,6 +109,8 @@ def list_items(request):
                'orderBy': orderBy,
                'search': searchItem,
                'category': category,
+               'isHome': True,
+               'cartNum': 0,
                'curPage': int(pageNum)}
 
     return render(request, 'goods/list_items_demo.html', context)
@@ -113,12 +121,14 @@ def detail(request):
     item = Items.objects.get(id=itemId)
     category = request.GET.get('category', default='all')
 
+    # filter items based on related input information
     if category == "all":
         items = Items.objects.all().order_by('id')
     else:
         items = Items.objects.all().order_by('id').filter(category=category)
     recommend = list()
 
+    # get recommend items
     numOfItems = len(items)
     if numOfItems <= 2:
         recommend = items
@@ -130,7 +140,14 @@ def detail(request):
         recommend.append(items[num1])
         recommend.append(items[num2])
 
+    # organize response context
     context = {'item': item,
+               'cartNum': 0,
                'recommend': recommend}
 
     return render(request, 'goods/item_detail_demo.html', context)
+
+
+def service(request):
+    return render(request, 'goods/service.html', {'isService': True,
+                                                  'cartNum': 0})
