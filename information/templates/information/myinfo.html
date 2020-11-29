@@ -1,5 +1,7 @@
-{% extends "eCommerce/base.html" %}
+{% extends "goods/base.html" %}
 {% block content %}
+        <link rel="stylesheet" type="text/css" href="../static/css/myinfo2.css"/>
+        <script type="text/javascript" src="../static/information/popup.js"></script>
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
@@ -30,17 +32,36 @@
                         <a href="#"> <img src="../static/eCommerce/img/flower.jpg" alt=""></a>
                     </div>
                     <div class="col2">
-                        <h3 class="title"><strong style="float: left;">Personal info</strong><a href="#" class="fr" id="edit1">edit</a></h3>
-							<div>Name: Yuanpeng Cao</div>
-							<div>Birthday：11/03/2020</div>
-							<div>Gender：male</div>
+                        <h3 class="title"><strong style="float: left;">Personal info</strong><input id="button" class= "fr" type="submit" value="edit" /></h3>
+							<div>Name: {{user.username}}</div>
+							<div>Birthday：{{birthday}}</div>
+							<div>Gender：{{gender}}</div>
 							<h3>Default Address</h3>
-							<div><span class="fl">828 Greenfield Ave, Pittsburgh, PA</span><a href="#" class="fr" id="edit2">edit</a></div>
+							<div><span class="fl">{{address}}</span></div>
                     </div>
                 </div>
 
             </div>
+            <div id="popupContact">
+                <a style="color: brown;" id="popupContactClose">X</a>
+                <h1 style="color: brown;">Update your information</h1>
+                    <form action="#" method="get">
+<!--                        <p><label>Username：</label>{{my_profileForm.birthday}}</p>-->
+                        <p><label>Birthday：</label>{{my_profileForm.birthday}}</p>
+                        <p>
+                            <label>Gender：</label>
+                            </label>{{my_profileForm.gender}}
+                        </p>
+                         <p><label>Address：</label>{{my_profileForm.address}}</p>
+                        <div >
+                            <input type="button" value="Submit"  />
+                        </div>
+
+                    </form>
+
+            </div>
+
         </div>
-    </div>
-    
+
+
 {% endblock %}
