@@ -46,8 +46,8 @@ def showOrderDetail(request):
     context['order'] = order
     context['isOrder'] = True
     context['cartNum'] = len(Cart.objects.filter(user_id=request.user))
-    print(order.status)
-    # confirmOrder(request, order.orderid)
+
+
     return render(request, 'order/showOrderDetail.html', context)
 
 
@@ -63,12 +63,14 @@ def showAllOrder(request):
     return render(request, 'order/showAllOrder.html', context)
 
 
+
 def confirmOrder(request):
     orderid = request.GET.get('orderId')
     order = Order.objects.get(orderid=orderid)
     order.status = 1
     order.save()
     return redirect(reverse("showAllOrder"))
+
 
 
 ## list['itemId'] = quantity

@@ -10,6 +10,12 @@ from django.urls import reverse
 from goods.models import Items
 from information.forms import LoginForm, RegisterForm, EditProfileForm
 from information.models import Profile, Cart
+
+from order.views import createOrder
+import json
+
+from seller.views import createSeller, Seller
+
 from seller.models import Seller
 
 def logout_action(request):
@@ -19,7 +25,6 @@ def logout_action(request):
 @login_required
 def delete(request):
     itemId = request.GET.get('itemId')
-    print(itemId)
     Cart.objects.filter(user=request.user.id).get(goods_id=int(itemId)).delete()
     return HttpResponse()
 
@@ -72,7 +77,6 @@ def myinfo(request):
             }
             return render(request, 'information/myinfo.html', context)
 
-
         request.user.profile.birthday = form.cleaned_data['birthday']
         request.user.profile.gender = form.cleaned_data['gender']
         request.user.profile.address = form.cleaned_data['address']
@@ -97,11 +101,42 @@ def get_photo_goods(request, id):
 
 
 def profile_page(request):
-    return render(request, 'information/profile.html', {})
+    context = {
+        'userId':request.user.id
+    }
+    return render(request, 'information/profile.html', context)
+
+
+def create_seller(request):
+    createSeller(request)
+    return render(request, 'seller/sellerProfile.html', {})
+
+
+
+def create_order_pre_pay(request):
+    total_price = request.GET.get("total_price")
+    content = request.GET.get("content")
+    if content is None:
+        content = {}
+    orderId = createOrder(request, content, float(total_price),"",request.user)
+    response_json = json.dumps({'orderId': orderId, 'totalPrice': int(total_price)})
+    return HttpResponse(response_json, content_type='application/json')
 
 
 def pay_page(request):
-    return render(request, 'information/pay.html', {'cartNum': len(Cart.objects.filter(user_id=request.user))})
+
+    orderId = request.GET.get("orderId")
+    total_price = request.GET.get("total_price")
+    address = request.user.profile.address
+    content = {
+        'cartNum': len(Cart.objects.filter(user_id=request.user)),
+        'orderId':orderId,
+        'total_price':total_price,
+        'address': address,
+        'userId': request.user.id
+    }
+    return render(request, 'information/pay.html', content)
+
 
 
 def cart_add(request):
@@ -219,3 +254,4 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
+
