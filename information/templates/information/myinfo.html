@@ -23,12 +23,14 @@
                         <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
                         <li><a href="{% url 'myinfo' %}">My address</a></li>
                     </ul>
-
-                    {% if isSeller == True %}
-                    <h4><a href="/seller/sellerinfo?userId={{ userId }}">My Shop</a></h4>
-                    {% else %}
-                    <h4><a href="/seller/createSeller?userId={{ userId }}">I want to be a Seller.</a></h4>
-                    {% endif %}
+                    <h4>Become a seller</h4>
+                    <ul>
+                        {% if isSeller == True %}
+                            <li><a href="/seller/sellerinfo?userId={{ userId }}">My Shop</a></li>
+                        {% else %}
+                            <li><a href="/seller/createSeller?userId={{ userId }}">My Shop</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
             <div class="right">

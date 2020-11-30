@@ -23,7 +23,11 @@
                     </ul>
                     <h4>Become a seller</h4>
                     <ul>
-                        <li><a href="{% url 'create_seller' %}">My Shop</a></li>
+                        {% if isSeller == True %}
+                            <li><a href="/seller/sellerinfo?userId={{ userId }}">My Shop</a></li>
+                        {% else %}
+                            <li><a href="/seller/createSeller?userId={{ userId }}">My Shop</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
