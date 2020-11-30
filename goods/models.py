@@ -5,13 +5,13 @@ from seller.models import Seller
 
 
 class Items(models.Model):
-    name = models.CharField(max_length=100)
-    desc = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    desc = models.CharField(max_length=2000)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     unit = models.CharField(max_length=10)
     stocks = models.IntegerField(default=0)
     sales = models.IntegerField(default=0)
-    detail = models.CharField(max_length=1000)
+    detail = models.CharField(max_length=4000)
     image = models.ImageField(upload_to='items', blank=True)
     content_type = models.CharField(max_length=50, blank=True)
     status = models.SmallIntegerField(default=1, )
