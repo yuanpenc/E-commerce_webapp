@@ -18,9 +18,11 @@ from seller.views import createSeller, Seller
 
 from seller.models import Seller
 
+
 def logout_action(request):
     logout(request)
     return redirect(reverse('login'))
+
 
 @login_required
 def delete(request):
@@ -29,6 +31,7 @@ def delete(request):
     return HttpResponse()
 
 
+# function to show myinfo page and privode functions to edit user's profile
 @login_required
 def myinfo(request):
     if request.method == 'GET':
@@ -54,7 +57,7 @@ def myinfo(request):
             'cartNum': cart_size(request),
             'userId': request.user.id,
         }
-        if Seller.objects.filter(user_id__exact = request.user.id):
+        if Seller.objects.filter(user_id__exact=request.user.id):
             context['isSeller'] = True
         else:
             context['isSeller'] = False
@@ -100,11 +103,9 @@ def get_photo_goods(request, id):
     return HttpResponse(customer.picture, content_type=customer.content_type)
 
 
+# show deal_profile pages where offer link to cart and order
 def profile_page(request):
-    context = {
-        'userId':request.user.id
-    }
-    context['userId'] = request.user.id
+    context = {'userId': request.user.id}
     profile = Profile.objects.get(user_id=request.user.id)
     context['pic'] = profile.picture
     if Seller.objects.filter(user_id__exact=request.user.id):
@@ -114,26 +115,26 @@ def profile_page(request):
     return render(request, 'information/profile.html', context)
 
 
-
+# providing parameters before going to pay_page
 def create_order_pre_pay(request):
     total_price = request.GET.get("total_price")
     content = request.GET.get("content")
     if content is None:
         content = {}
-    orderId = createOrder(request, content, float(total_price),"",request.user)
+    orderId = createOrder(request, content, float(total_price), "", request.user)
     response_json = json.dumps({'orderId': orderId, 'totalPrice': int(total_price)})
     return HttpResponse(response_json, content_type='application/json')
 
 
+# show pay_page
 def pay_page(request):
-
     orderId = request.GET.get("orderId")
     total_price = request.GET.get("total_price")
     address = request.user.profile.address
     content = {
         'cartNum': len(Cart.objects.filter(user_id=request.user)),
-        'orderId':orderId,
-        'total_price':total_price,
+        'orderId': orderId,
+        'total_price': total_price,
         'address': address,
         'userId': request.user.id
     }
@@ -141,7 +142,7 @@ def pay_page(request):
     return render(request, 'information/pay.html', content)
 
 
-
+# add item into the cart
 def cart_add(request):
     itemId = request.GET.get('itemId')
     cart_item = Cart.objects.filter(user_id=request.user)
@@ -154,11 +155,13 @@ def cart_add(request):
     return HttpResponse()
 
 
+# return the number of items in the cart
 def cart_size(request):
     cart_item = Cart.objects.filter(user_id=request.user)
     return len(cart_item)
 
 
+# show cart page
 def cart_page(request):
     context = {}
     if request.method == 'GET':
@@ -223,9 +226,6 @@ def login_action(request):
         return redirect(reverse('home'))
 
 
-
-
-
 def register_action(request):
     context = {}
     if request.method == "GET":
@@ -257,4 +257,3 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
-

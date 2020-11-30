@@ -1,12 +1,12 @@
 body{font-family:'Microsoft Yahei';font-size:12px;color:#666;}
 ul{list-style: none;padding:0;}
 
-/* Top part */
+
 .cart_count{
     color: coral;
 }
 
-/* 二级页面面包屑导航 */
+
 .breadcrumb{
 	width:1200px;height:30px;margin:0 auto;
 }
@@ -18,7 +18,7 @@ ul{list-style: none;padding:0;}
 .l_wrap{width:16%;}
 .r_wrap{width:83%;}
 
-/* 推荐样式 */
+
 
 .new_book{
 	border:1px solid #ededed;
@@ -37,7 +37,7 @@ ul{list-style: none;padding:0;}
 .new_book li h4 a{font-weight:normal;color:#666;display:block;width:160px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px}
 .new_book li .prize{font-size:14px;color:#da260e;margin:10px auto;text-indent:20px}
 
-/* 商品列表样式 */
+
 
 .sort_bar{height:30px;background-color:#f0fdec;width:100%}
 .sort_bar a{display:block;height:30px;line-height:30px;padding:0 20px;float:left;color:#000}
@@ -61,7 +61,7 @@ ul{list-style: none;padding:0;}
 .book_type_list .operate .add_book{display:inline-block;width:15px;height:15px;background:url(../eCommerce/img/shop_cart.png);position:absolute;right:0;top:3px;}
 
 
-/* 分页样式 */
+
 
 .pagenation{height:32px;text-align:center;font-size:0;margin:30px auto;}
 .pagenation a{display:inline-block;border:1px solid #d2d2d2;background-color:#f8f6f7;font-size:12px;padding:7px 10px;color:#666;margin:5px}
@@ -69,7 +69,7 @@ ul{list-style: none;padding:0;}
 .pagenation .active{background-color:#fff;color:#43a200}
 
 
-/* 商品详情样式 */
+
 .book_detail_con{
 	width:1198px;
 	height:398px;
