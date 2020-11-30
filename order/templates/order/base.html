@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{#    Reference: https://v3.bootcss.com/ #}
+{#    Reference: https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js #}
     <meta charset="UTF-8">
     <title>E-Commerce Projects List</title>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -14,8 +16,10 @@
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/myinfo.css"/>
 </head>
+
+{# Picture Reference: https://binxybaby.com/products/shopping-cart-hammock-coming-up-roses #}
 <body style="background: url(../static/goods/img/background.jpg) center fixed; background-size: 100%;">
-    <div class="container">
+    <div class="container" >
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
             <div class="container">
                 <div class="navbar-header">
@@ -26,44 +30,61 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Service</a></li>
+                        {% if isHome %}
+                            <li class="active"><a href="/goods/list_items">Home</a></li>
+                        {% else %}
+                            <li><a href="/goods/list_items">Home</a></li>
+                        {% endif %}
+                        {% if isService %}
+                            <li class="active"><a href="/goods/service">Service</a></li>
+                        {% else %}
+                            <li><a href="/goods/service">Service</a></li>
+                        {% endif %}
                     </ul>
 
-                    <form class="nav navbar-form navbar-left" role="search">
-                        <li><select class="form-control" style="width:80px;">
-                                    <option>All</option>
-                                    <option>Arts & Crafts</option>
+                    <form class="nav navbar-form navbar-left" role="search" method ="get" action="/goods/list_items">
+                        <li><select id="category" class="form-control" style="width:80px;" name="category">
+                                    <option value="all">All</option>
+                                    <option>Arts</option>
                                     <option>Automotive</option>
                                     <option>Baby</option>
                                     <option>Books</option>
                                     <option>Computers</option>
                                     <option>Electronics</option>
-                                    <option>Deals</option>
+                                    <option>Health</option>
                                     <option>Luggage</option>
                                     <option>Software</option>
                                 </select>
                         <div class="form-group">
-                            <input id="search_bar" type="text" class="form-control" placeholder="Search products..." width="50%">
+                            <input name="search" id="search_bar" list="item_list" type="text" class="form-control" autocomplete="off" placeholder="Search products..." width="50%">
+                            <datalist id="item_list"></datalist>
                         </div>
 
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">Search</span></button></li>
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-{#                        <li><a href="../navbar/"><span class="glyphicon glyphicon-off"> </span>   Logout</a></li>#}
-                        <li><a href="../navbar/"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
-                        <li><a href="../navbar-fixed-top/"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> 0</span></a></li>
+                        {% if isOrder %}
+                            <li class="active"><a href="/order/showAllOrder"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                        {% else %}
+                            <li><a href="/order/showAllOrder"><span class="glyphicon glyphicon-folder-open"> </span>   Orders</a></li>
+                        {% endif %}
+                        {% if isCart %}
+                            <li class="active"><a href="/information/cart"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> {{ cartNum }}</span></a></li>
+                        {% else %}
+                            <li><a href="/information/cart"><span class="glyphicon glyphicon-shopping-cart"></span>Cart <span class="cart_count fl"> {{ cartNum }}</span></a></li>
+                        {% endif %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   Hello, Team 25! <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-home"></span>   Hello, {{ user }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/">User Center</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="/information">User Center</a></li>
+                                    <li><a href="/information/cart">My Cart</a></li>
+                                    <li><a href="/order/showAllOrder">My Orders</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#"><span class="glyphicon glyphicon-off"> </span> Logout</a></li>
+                                    <li class="dropdown-header">Your Account</li>
+                                    <li><a href="/information">Personal Info</a></li>
+                                    <li><a href="/information">Setting</a></li>
+                                    <li><a href="/information/logout"><span class="glyphicon glyphicon-off"> </span> Logout</a></li>
                                 </ul>
                         </li>
                     </ul>
@@ -76,8 +97,6 @@
     <div class="container" style="margin-top: 30px">
     </div>
 
-
-
     <div class="content">
             {% block content %}
             {% endblock %}
@@ -86,3 +105,57 @@
 
 </body>
 </html>
+
+<script>
+    $('input#search_bar').bind('keyup', function () {
+        var item = $('input#search_bar').val();
+        var category = $('select#category').val();
+        $.ajax({
+            url: "/goods/get_related",
+            type: "GET",
+            dataType: 'json',
+            data: {'item': item,
+                   'category': category},
+            async: false,
+            success: function (response) {
+                $('datalist#item_list').empty();
+                for (var i = 0; i < response.length; i++) {
+                    var add_options = '<option value="' + response[i] + '">'+ response[i] + '</option>';
+                    $('datalist#item_list').append(add_options);
+                }
+            }
+        })
+    });
+
+    function add_to_cart() {
+        var item = $('input#itemId').val();
+        $.ajax({
+            url: "/information/addToCart",
+            type: "GET",
+            data: {'itemId': item},
+            success: function (response) {
+                alert("This item has added into your cart.");
+                location.reload();
+            }
+        })
+    };
+
+    function buy_now(itemId) {
+        var quantity = parseFloat($('select#qty').val());
+        var totalPrice = (parseFloat($('select#qty').val()) * parseFloat(document.getElementById("price").innerText)).toFixed(2);
+        $.ajax({
+            url: "/goods/buyNow",
+            type: "GET",
+            data: {'itemId': itemId,
+                    'quantity': quantity,
+                    'totalPrice': totalPrice},
+            success: function (response) {
+                alert("You will pay this order.");
+                window.location.replace("/information/pay?orderId=" + response['orderId'] + "&total_price=" + response['totalPrice']);
+            }
+        })
+    };
+
+    {% block addScript %}
+    {% endblock %}
+</script>
