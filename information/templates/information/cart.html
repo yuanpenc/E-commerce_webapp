@@ -19,7 +19,7 @@
                     <tr>
                         <td class="td1">
                             <div class="inline">
-                                <input type="checkbox" name="is_checkbox" id="is-checkbox_{{item.id}}">
+                                <input type="checkbox" name="is_checkbox" id="is-checkbox_{{item.goods.id}}">
 
                             </div>
                             <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="item_photo"></a>
@@ -31,19 +31,19 @@
                             </div>
                         </td>
                         <td>
-                            <div class="price"><input style="width: 60px; height: 20px;text-align: center;" type="text" id="price_{{item.id}}" value="{{item.goods.price}}" readonly /></div>
+                            <div class="price"><input style="width: 60px; height: 20px;text-align: center;" type="text" id="price_{{item.goods.id}}" value="{{item.goods.price}}" readonly /></div>
                         </td>
                         <td>
                             <div class="amount">
-                                <img  id="num-sub_{{item.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.id}})" alt="sub">
-                                <input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.id}}" value="1" readonly />
+                                <img  id="num-sub_{{item.goods.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.goods.id}})" alt="sub">
+                                <input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.goods.id}}" value="1" readonly />
 
-                                <img id="num-add_{{item.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.id}})" alt="add">
+                                <img id="num-add_{{item.goods.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.goods.id}})" alt="add">
                             </div>
                         </td>
                         <td>
                             <div class="price"  >
-                                <input style="width: 70px; height: 20px;text-align: center;" type="text" id="cost_num_{{item.id}}" value="{{item.goods.price}}" readonly />
+                                <input style="width: 70px; height: 20px;text-align: center;" type="text" id="cost_num_{{item.goods.id}}" value="{{item.goods.price}}" readonly />
                             </div>
                         </td>
                         <td>
@@ -59,7 +59,7 @@
             {% if cart_item.count == 0%}
                     <div> No items in the cart </div>
             {% endif %}
-            <center><a href="#"  style="" class="button button-caution button-rounded button-jumbo" onclick="pay()">Pay Now</a></center>
+            <center><a href="#" style="" class="button button-caution button-rounded button-jumbo" onclick="pay()">Pay Now</a></center>
         <br>
         </div>
     </div>
@@ -80,7 +80,7 @@
 
 
         function add(id){
-            var num_add = document.getElementById("num-add_");
+            var num_add = document.getElementById("num-add_"+id);
             var input_num = document.getElementById("input-num_"+id);
             var cost = document.getElementById("cost_num_"+id);
             var price = document.getElementById("price_"+id)
@@ -115,15 +115,37 @@
                     console.log(id)
                     let amount = document.getElementById("input-num_"+id)
                     console.log(amount.value)
-                    content.set(id,amount)
-                    cost += document.getElementById("cost_num_"+id)
+                    content.set(id,parseInt(amount.value))
+                    cost += parseInt(document.getElementById("cost_num_"+id).value)
                 }
             }
-            var comment = ""
 
+            if (cost == 0) {
+                alert("At least buy something")
+                return;
+            }
+            let obj= Object.create(null);
+            for (let[k,v] of content) {
+              obj[k] = v;
+            }
+            console.log(content)
+            console.log(JSON.stringify(obj))
             $.ajax({
-                url: "/information/pay",
-             });
+                url: "/information/create",
+                type: "GET",
+                data: {
+                    "total_price": cost,
+                    "content": JSON.stringify(obj)
+                },
+                success: function (response) {
+                    console.log(response)
+                    {window.location.replace("/information/pay?orderId="+response["orderId"]+"&total_price="+response["totalPrice"]);}
+                }
+
+             })
+
+
+
         }
 
     </script>
