@@ -4,9 +4,9 @@
             <div class="left">
                 <h3>
                     {% if pic == '' %}
-                        <a href="/seller/sellerinfo?userId={{ userId }}"><img src="../static/information/img/flower.jpg"/></a>
+                        <a href="/seller/sellerinfo?userId={{ userId }}"><img style="height: 50%; width: 50%" src="../static/information/img/flower.jpg"/></a>
                     {% else %}
-                        <a href="/seller/sellerinfo?userId={{ userId }}"><img src="{% url 'photoSeller' seller.id %}"/></a>
+                        <a href="/seller/sellerinfo?userId={{ userId }}"><img style="height: 50%; width: 50%" src="{% url 'photoSeller' seller.id %}"/></a>
                     {% endif %}
                     <span >{{ seller.name }}</span>
                 </h3>
@@ -25,9 +25,9 @@
                     </ul>
                     <h4>QR Code</h4>
                     {% if qrcode == '' %}
-                        <a href="#"><img src="https://image-static.segmentfault.com/149/570/149570997-5b987cc928d69_articlex"/></a>
+                        <a href="#"><img style="height: 50%; width: 50%" src="https://image-static.segmentfault.com/149/570/149570997-5b987cc928d69_articlex"/></a>
                     {% else %}
-                        <a href="#"><img src="{% url 'photoQR' seller.id %}"/></a>
+                        <a href="#"><img style="height: 50%; width: 50%" src="{% url 'photoQR' seller.id %}"/></a>
                     {% endif %}
                     <ul>
                         <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
