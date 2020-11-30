@@ -28,21 +28,21 @@
             <span style="color:red;">{% for error in error_msg_login %} {{error}} {% endfor %}</span>
             {% csrf_token %}
             <input type="submit" name="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+{#            <p class="social-text">Or Sign in with social platforms</p>#}
+{#            <div class="social-media">#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-facebook-f"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-twitter"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-google"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-linkedin-in"></i>#}
+{#              </a>#}
+{#            </div>#}
           </form>
           <form method="post" action="{% url 'login' %}" class="sign-up-form">
             <h2 class="title">Sign up</h2>
@@ -65,21 +65,21 @@
             <span style="color:red;">{% for error in error_msg_register %} {{error}} {% endfor %}</span>
             {% csrf_token %}
             <input type="submit" name="submit" class="btn" value="SignUp" />
-            <p class="social-text">Or Sign up with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+{#            <p class="social-text">Or Sign up with social platforms</p>#}
+{#            <div class="social-media">#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-facebook-f"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-twitter"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-google"></i>#}
+{#              </a>#}
+{#              <a href="#" class="social-icon">#}
+{#                <i class="fab fa-linkedin-in"></i>#}
+{#              </a>#}
+{#            </div>#}
           </form>
         </div>
       </div>

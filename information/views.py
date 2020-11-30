@@ -77,7 +77,7 @@ def myinfo(request):
         request.user.profile.gender = form.cleaned_data['gender']
         request.user.profile.address = form.cleaned_data['address']
         request.user.profile.picture = form.cleaned_data['picture']
-        request.user.profile.content_type = 'image/png'
+        request.user.profile.content_type = form.cleaned_data['picture'].content_type
         request.user.profile.save()
         form.save()
         return redirect(reverse('myinfo'))
@@ -129,10 +129,6 @@ def cart_page(request):
                    'cartNum': cart_size(request),
                    'isCart': True}
         return render(request, 'information/cart.html', context)
-
-
-def profile_page(request):
-    return render(request, 'information/profile.html', {})
 
 
 def login_action(request):
