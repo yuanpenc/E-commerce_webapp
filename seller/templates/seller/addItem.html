@@ -3,7 +3,11 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="/seller/sellerinfo?userId={{ sellerId }}"><img src="{% url 'photoSeller' seller.id %}"/></a>
+                    {% if pic == '' %}
+                        <a href="/seller/sellerinfo?userId={{ userId }}"><img src="../static/information/img/flower.jpg"/></a>
+                    {% else %}
+                        <a href="/seller/sellerinfo?userId={{ userId }}"><img src="{% url 'photoSeller' seller.id %}"/></a>
+                    {% endif %}
                     <span >{{ seller.name }}</span>
                 </h3>
                 <div>
@@ -20,11 +24,19 @@
                         <li>{{ seller.zip }}</li>
                     </ul>
                     <h4>QR Code</h4>
+                    {% if qrcode == '' %}
+                        <a href="#"><img src="https://image-static.segmentfault.com/149/570/149570997-5b987cc928d69_articlex"/></a>
+                    {% else %}
+                        <a href="#"><img src="{% url 'photoQR' seller.id %}"/></a>
+                    {% endif %}
                     <ul>
                         <li><a href="addItems?sellerId={{ sellerId }}">Add Items</a></li>
                     </ul>
                     <ul>
                         <li><a href="sellerSetting?sellerId={{ sellerId }}">Setting</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/seller/sellerinfo?userId={{ userId }}">My Shop</a></li>
                     </ul>
                 </div>
             </div>

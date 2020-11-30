@@ -14,6 +14,9 @@ def sellerProfile(request):
     context['items'] = items
     context['sellerId'] = sellerId
     context['seller'] = seller
+    context['pic'] = seller.image
+    context['qrcode'] = seller.qrcode
+    context['userId'] = request.user.id
     return render(request, 'seller/sellerProfile.html', context)
 
 @login_required
@@ -26,7 +29,7 @@ def createSeller(request):
     return sellerProfile(request)
 
 @login_required
-def get_photo_goods(request, id):
+def get_photo_Seller(request, id):
     seller = get_object_or_404(Seller, id=id)
     # print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
 
@@ -38,6 +41,18 @@ def get_photo_goods(request, id):
     return HttpResponse(seller.image, content_type=seller.image_content_type)
 
 @login_required
+def get_photo_QR(request, id):
+    seller = get_object_or_404(Seller, id=id)
+    # print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
+
+    # Maybe we don't need this check as form validation requires a picture be uploaded.
+    # But someone could have delete the picture leaving the DB with a bad references.
+    if not seller.qrcode:
+        raise Http404
+
+    return HttpResponse(seller.qrcode, content_type=seller.qrcode_content_type)
+
+@login_required
 def sellerSetting(request):
     context = {}
     sellerId = request.GET.get('sellerId')
@@ -46,6 +61,9 @@ def sellerSetting(request):
         context['sellerId'] = sellerId
         context['seller'] = seller
         context['form'] = SellerForm(instance=seller)
+        context['pic'] = seller.image
+        context['qrcode'] = seller.qrcode
+        context['userId'] = request.user.id
         return render(request, 'seller/sellerSetting.html', context)
 
     form = SellerForm(request.POST, request.FILES)
@@ -53,6 +71,9 @@ def sellerSetting(request):
     if not form.is_valid():
         context['form'] = form
         context['sellerId'] = sellerId
+        context['pic'] = seller.image
+        context['qrcode'] = seller.qrcode
+        context['userId'] = request.user.id
         return render(request, 'seller/sellerSetting.html', context)
 
     image = form.cleaned_data['image']
@@ -80,6 +101,9 @@ def sellerSetting(request):
     context['sellerId'] = sellerId
     context['seller'] = seller
     context['form'] = SellerForm(instance=Seller.objects.get(id=sellerId))
+    context['pic'] = seller.image
+    context['qrcode'] = seller.qrcode
+    context['userId'] = request.user.id
     return render(request, 'seller/sellerSetting.html', context)
 
 @login_required
@@ -91,6 +115,9 @@ def addItems(request):
         context['sellerId'] = sellerId
         context['form'] = ItemForm()
         context['seller'] = seller
+        context['pic'] = seller.image
+        context['qrcode'] = seller.qrcode
+        context['userId'] = request.user.id
         return render(request, 'seller/addItem.html', context)
 
     form = ItemForm(request.POST, request.FILES)
@@ -99,6 +126,9 @@ def addItems(request):
         context['sellerId'] = sellerId
         seller = Seller.objects.get(id=sellerId)
         context['seller'] = seller
+        context['pic'] = seller.image
+        context['qrcode'] = seller.qrcode
+        context['userId'] = request.user.id
         return render(request, 'seller/addItem.html', context)
 
     new_item = Items(name=form.cleaned_data['name'],
@@ -125,6 +155,9 @@ def addItems(request):
     context['items'] = items
     context['sellerId'] = sellerId
     context['seller'] = seller
+    context['pic'] = seller.image
+    context['qrcode'] = seller.qrcode
+    context['userId'] = request.user.id
     return render(request, 'seller/sellerProfile.html', context)
 
 
@@ -155,12 +188,16 @@ def sellerItemDetail(request):
         context['sellerId'] = sellerId
         seller = Seller.objects.get(id=sellerId)
         context['seller'] = seller
+        context['pic'] = seller.image
+        context['qrcode'] = seller.qrcode
+        context['userId'] = request.user.id
         return render(request, 'seller/itemDetail.html', context)
 
     form = ItemDetailForm(request.POST, request.FILES)
 
     if not form.is_valid():
         context = {'form': form, 'itemId': itemId}
+
         return render(request, 'seller/itemDetail.html', context)
 
     image = form.cleaned_data['image']
@@ -187,4 +224,8 @@ def sellerItemDetail(request):
                'form': ItemDetailForm(instance=Items.objects.get(id=itemId))}
     seller = Seller.objects.get(id=sellerId)
     context['seller'] = seller
+    context['pic'] = seller.image
+    context['qrcode'] = seller.qrcode
+    context['userId'] = request.user.id
+    context['sellerId'] = sellerId
     return render(request, 'seller/itemDetail.html', context)

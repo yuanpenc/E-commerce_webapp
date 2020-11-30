@@ -104,6 +104,9 @@ def profile_page(request):
     context = {
         'userId':request.user.id
     }
+    context['userId'] = request.user.id
+    profile = Profile.objects.get(user_id=request.user.id)
+    context['pic'] = profile.picture
     if Seller.objects.filter(user_id__exact=request.user.id):
         context['isSeller'] = True
     else:
