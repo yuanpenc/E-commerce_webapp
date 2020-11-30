@@ -9,7 +9,7 @@ from seller.forms import *
 def sellerProfile(request):
     context = {}
     sellerId = request.GET.get('userId')
-    seller = Seller.objects.get(user=sellerId)
+    seller = Seller.objects.get(user_id=sellerId)
     items = Items.objects.all().filter(created_by=sellerId)
     context['items'] = items
     context['sellerId'] = sellerId
