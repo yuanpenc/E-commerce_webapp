@@ -15,6 +15,7 @@ from order.views import createOrder
 ITEMS_IN_ONE_PAGE = 15
 
 
+# get photo through an url
 @login_required
 def get_photo(request, id):
     item = get_object_or_404(Items, id=id)
@@ -28,6 +29,7 @@ def get_photo(request, id):
     return HttpResponse(item.image, content_type=item.content_type)
 
 
+# for ajax request, return items whose name including user input based on a specific category
 @login_required
 def get_related(request):
     # filter item names based on related input information
@@ -46,6 +48,7 @@ def get_related(request):
     return HttpResponse(response_json, content_type='application/json')
 
 
+# list items in market by a specific order
 @login_required
 def list_items(request):
     pageNum = request.GET.get('pageNum', default=1)
@@ -81,7 +84,7 @@ def list_items(request):
         recommend.append(items[num1])
         recommend.append(items[num2])
 
-    lastPageNum = math.ceil(numOfItems / ITEMS_IN_ONE_PAGE);
+    lastPageNum = math.ceil(numOfItems / ITEMS_IN_ONE_PAGE)
 
     # numbers show on page directory
     numOfPagesList = []
@@ -105,8 +108,6 @@ def list_items(request):
     start = (int(pageNum) - 1) * ITEMS_IN_ONE_PAGE
     end = start + ITEMS_IN_ONE_PAGE
 
-    print(request.user.first_name + " " + request.user.last_name)
-
     context = {'items': items[start:end],
                'user': request.user.username,
                'recommend': recommend,
@@ -126,6 +127,7 @@ def list_items(request):
     return render(request, 'goods/list_items_demo.html', context)
 
 
+# show an item detail
 @login_required
 def detail(request):
     itemId = request.GET.get('itemId', default=1)
@@ -160,6 +162,7 @@ def detail(request):
     return render(request, 'goods/item_detail_demo.html', context)
 
 
+# show the service page
 @login_required
 def service(request):
     return render(request, 'goods/service.html', {'isService': True,
@@ -167,6 +170,7 @@ def service(request):
                                                   'cartNum': cart_size(request)})
 
 
+# buy an item directly
 @login_required
 def buy_now(request):
     itemId = request.GET.get('itemId')
@@ -184,6 +188,7 @@ def buy_now(request):
     return HttpResponse(response_json, content_type='application/json')
 
 
+# return the size of cart for current user
 def cart_size(request):
     cart_item = Cart.objects.filter(user_id=request.user)
     return len(cart_item)
