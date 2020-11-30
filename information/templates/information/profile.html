@@ -17,6 +17,10 @@
                         <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
                         <li> <a href="{% url 'myinfo' %}">My address</a></li>
                     </ul>
+                    <h4>Become a seller</h4>
+                    <ul>
+                        <li><a href="{% url 'create_seller' %}">My Shop</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="right">
@@ -31,19 +35,13 @@
                 <div class="bott">
                     <div >
                         <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
-                        <p class="fl"><span>Unpaid orders: <strong style="color: #A10000;">0</strong></span>
-                            <a href="myorderq.html"> Check your unpaid orders></a>
-                        </p>
-                    </div>
-                    <div >
-                        <i class="fa fa-heart-o fa-4x" aria-hidden="true"></i>
-                        <p class="fl"><span>Completed Orders: <strong style="color: #A10000;">0</strong></span>
-                            <a href="myorderq.html">Check your Completed orders></a>
+                        <p class="fl"><span>Paid orders: <strong style="color: #A10000;"></strong></span>
+                            <a href="/order/showAllOrder"> Check your orders></a>
                         </p>
                     </div>
                     <div>
                         <i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
-                        <p class="fl"><span>Cart: <strong style="color: #A10000;">0</strong></span>
+                        <p class="fl"><span>Cart: <strong style="color: #A10000;"></strong></span>
                             <a href="{% url 'cart' %}">Check your cart></a>
                         </p>
                     </div>

@@ -13,6 +13,9 @@ from information.models import Profile, Cart
 from order.views import createOrder
 import json
 
+from seller.views import createSeller, Seller
+
+
 @login_required
 def myinfo(request):
     if request.method == 'GET':
@@ -67,14 +70,19 @@ def profile_page(request):
     return render(request, 'information/profile.html', {})
 
 
+def create_seller(request):
+    createSeller(request)
+    return render(request, 'seller/sellerProfile.html', {})
+
+
+
 def create_order_pre_pay(request):
     total_price = request.GET.get("total_price")
     content = request.GET.get("content")
     if content is None:
         content = {}
-    # content = json.dump(content)
     orderId = createOrder(request, content, float(total_price),"",request.user)
-    response_json = json.dumps({'orderId': orderId, 'totalPrice': total_price})
+    response_json = json.dumps({'orderId': orderId, 'totalPrice': int(total_price)})
     return HttpResponse(response_json, content_type='application/json')
 
 
@@ -82,10 +90,12 @@ def pay_page(request):
 
     orderId = request.GET.get("orderId")
     total_price = request.GET.get("total_price")
+    address = request.user.profile.address
     content = {
         'cartNum': len(Cart.objects.filter(user_id=request.user)),
         'orderId':orderId,
-        'total_price':total_price
+        'total_price':total_price,
+        'address': address,
     }
     return render(request, 'information/pay.html', content)
 
@@ -202,3 +212,4 @@ def register_action(request):
 
     login(request, new_user)
     return redirect(reverse('home'))
+
