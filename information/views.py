@@ -104,12 +104,11 @@ def profile_page(request):
     context = {
         'userId':request.user.id
     }
+    if Seller.objects.filter(user_id__exact=request.user.id):
+        context['isSeller'] = True
+    else:
+        context['isSeller'] = False
     return render(request, 'information/profile.html', context)
-
-
-def create_seller(request):
-    createSeller(request)
-    return render(request, 'seller/sellerProfile.html', {})
 
 
 
