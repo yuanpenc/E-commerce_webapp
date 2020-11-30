@@ -1,8 +1,8 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
@@ -10,19 +10,23 @@ from django.urls import reverse
 from goods.models import Items
 from information.forms import LoginForm, RegisterForm, EditProfileForm
 from information.models import Profile, Cart
-from seller.views import createSeller
+from seller.models import Seller
 
+def logout_action(request):
+    logout(request)
+    return redirect(reverse('login'))
 
 @login_required
 def myinfo(request):
     if request.method == 'GET':
+
         form = EditProfileForm(instance=request.user.profile)
         profile = Profile.objects.get(user_id=request.user.id)
         if profile is None:
             pic = ''
-            birthday = '01-01-2020'
+            birthday = '01-01-1980'
             gender = 'male'
-            address = "Greenfield 829 Ave, Pittsburgh, PA"
+            address = "No specific address"
         else:
             pic = profile.picture
             birthday = profile.birthday
@@ -37,6 +41,10 @@ def myinfo(request):
             'cartNum': cart_size(request),
             'userId': request.user.id,
         }
+        if Seller.objects.filter(user_id__exact = request.user.id):
+            context['isSeller'] = True
+        else:
+            context['isSeller'] = False
         return render(request, 'information/myinfo.html', context)
     else:
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -60,9 +68,24 @@ def myinfo(request):
         request.user.profile.birthday = form.cleaned_data['birthday']
         request.user.profile.gender = form.cleaned_data['gender']
         request.user.profile.address = form.cleaned_data['address']
+        request.user.profile.picture = form.cleaned_data['picture']
+        request.user.profile.content_type = 'image/png'
         request.user.profile.save()
         form.save()
         return redirect(reverse('myinfo'))
+
+
+@login_required
+def get_photo_goods(request, id):
+    customer = get_object_or_404(Profile, id=id)
+    # print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
+
+    # Maybe we don't need this check as form validation requires a picture be uploaded.
+    # But someone could have delete the picture leaving the DB with a bad references.
+    if not customer.picture:
+        raise Http404
+
+    return HttpResponse(customer.picture, content_type=customer.content_type)
 
 
 def profile_page(request):
@@ -77,7 +100,7 @@ def cart_add(request):
     itemId = request.GET.get('itemId')
     cart_item = Cart.objects.filter(user_id=request.user)
     for item in cart_item:
-        if int(item.goods_id) == itemId:
+        if int(item.goods_id) == int(itemId):
             return
     new_cart_item = Cart(user=request.user, goods=Items.objects.get(id=itemId))
     new_cart_item.save()
@@ -150,7 +173,7 @@ def login_action(request):
         new_user = authenticate(username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password'])
 
-        createSeller(request, new_user)
+        # createSeller(request, new_user)
 
         login(request, new_user)
         return redirect(reverse('home'))
@@ -158,9 +181,7 @@ def login_action(request):
         return redirect(reverse('home'))
 
 
-def logout_action(request):
-    logout(request)
-    return redirect(reverse('login'))
+
 
 
 def register_action(request):

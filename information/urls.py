@@ -10,8 +10,8 @@ urlpatterns = [
     path('profile', views.profile_page, name='profile'),
     path('myinfo', views.myinfo, name='myinfo'),
     path('cart', views.cart_page, name='cart'),
-    path('photo/<int:id>', g_views.get_photo, name='photo'),
-    path('logout', views.logout, name='logout'),
+    path('photo/<int:id>', g_views.get_photo, name='photoProfile'),
+    path('logout', views.logout_action, name='logout'),
     path('addToCart', views.cart_add, name='addToCart'),
     path('pay', views.pay_page, name='pay'),
 

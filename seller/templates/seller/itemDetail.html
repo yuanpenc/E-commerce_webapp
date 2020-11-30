@@ -3,18 +3,21 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="/seller/sellerinfo?userId={{ sellerId }}"><img src="../static/eCommerce/img/flower.jpg"/></a>
-                    <span >Seller name</span>
+                    <a href="/seller/sellerinfo?userId={{ sellerId }}"><img src="{% url 'photoSeller' seller.id %}"/></a>
+                    <span >{{ seller.name }}</span>
                 </h3>
                 <div>
                     <h4>Description</h4>
                     <ul>
-                        <li>Description</li>
+                        <li>{{ seller.desc }}</li>
                     </ul>
                     <h4>Address</h4>
                     <ul>
-                        <li>Address</li>
-                        <li>Zip code</li>
+                        <li>{{ seller.address }}</li>
+                    </ul>
+                    <h4>Zip Code</h4>
+                    <ul>
+                        <li>{{ seller.zip }}</li>
                     </ul>
                     <h4>QR Code</h4>
                     <ul>
