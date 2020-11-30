@@ -18,7 +18,7 @@ db.sqlite36
 0*.py
 
 # Image folder
-#images
+images
 socialnetwork/migrations
 # MacOS index file
 .DS_Store
