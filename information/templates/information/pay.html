@@ -4,7 +4,11 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="#"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    {% if pic == '' %}
+                        <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                    {% else %}
+                        <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                    {% endif %}
                     <span >{{user.username}}</span>
                 </h3>
                 <div>
@@ -24,7 +28,11 @@
                 <h2><strong>Profile</strong></h2>
                 <div class="flex">
                     <div class="col1">
-                        <a href="#"> <img src="../static/eCommerce/img/flower.jpg" alt=""></a>
+                        {% if pic == '' %}
+                            <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                        {% else %}
+                            <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                        {% endif %}
                     </div>
                     <div class="col2">
                         <h3 class="title"><strong style="float: left;">Personal info</strong></h3>

@@ -3,7 +3,11 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="#"><img src='../static/eCommerce/img/flower.jpg'/></a>
+                    {% if pic == '' %}
+                        <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                    {% else %}
+                        <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                    {% endif %}
                     <span >{{user.username}}</span>
                 </h3>
                 <div>
@@ -22,7 +26,11 @@
             <div class="right">
                 <div class="info">
                     <div style="float: left; width: 50%; height: 100%;">
-                        <a href="#" class="fl"><img src='../static/eCommerce/img/flower.jpg' /></a>
+                        {% if pic == '' %}
+                            <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                        {% else %}
+                            <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                        {% endif %}
                         <p ><span>{{user.username}}</span>
                     </div>
 

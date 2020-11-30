@@ -1,7 +1,9 @@
 import datetime
 
 from django.http import Http404, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+
 from goods.models import Items
 import json
 
@@ -26,20 +28,7 @@ from order.forms import OrderForm
 from order.models import Order
 
 
-# def showOrder(request):
-#     orderid = 7
-#     order = Order.objects.get(id=orderid)
-#     asd = order.content
-#     print(asd)
-#     print("-0-0--0-0--0-")
-#     desc = json.loads(asd)
-#     for i in desc.keys():
-#         print(i)
-#         print(desc[i])
-#     context = {}
-#     return render(request, 'order/showOrderDetail.html', context)
-
-def showOrderDetail(request, orderid=7):
+def showOrderDetail(request):
     context = {}
     # orderid = 7
     # !!!!!!!!!!!
@@ -57,7 +46,8 @@ def showOrderDetail(request, orderid=7):
     context['order'] = order
     context['isOrder'] = True
     context['cartNum'] = len(Cart.objects.filter(user_id=request.user))
-    confirmOrder(request)
+    print(order.status)
+    # confirmOrder(request, order.orderid)
     return render(request, 'order/showOrderDetail.html', context)
 
 
@@ -73,11 +63,12 @@ def showAllOrder(request):
     return render(request, 'order/showAllOrder.html', context)
 
 
-def confirmOrder(request, orderid=7):
-    order = Order.objects.get(id=orderid)
+def confirmOrder(request):
+    orderid = request.GET.get('orderId')
+    order = Order.objects.get(orderid=orderid)
     order.status = 1
     order.save()
-    return
+    return redirect(reverse("showAllOrder"))
 
 
 ## list['itemId'] = quantity

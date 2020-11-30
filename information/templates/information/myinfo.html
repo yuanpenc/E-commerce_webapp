@@ -5,7 +5,11 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="#"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    {% if pic == '' %}
+                        <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                    {% else %}
+                        <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                    {% endif %}
                     <span >{{user.username}}</span>
                 </h3>
                 <div>
@@ -17,15 +21,24 @@
                     <h4>Account</h4>
                     <ul>
                         <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
-                        <li><a href="{% url 'myinfo' %}">My adress</a></li>
+                        <li><a href="{% url 'myinfo' %}">My address</a></li>
                     </ul>
+                    {% if isSeller == True %}
+                        <h4><a href="/seller/sellerinfo?userId={{ userId }}">My Shop</a></h4>
+                    {% else %}
+                        <h4><a href="/seller/createSeller?userId={{ userId }}">I want to be a Seller.</a></h4>
+                    {% endif %}
                 </div>
             </div>
             <div class="right">
                 <h2><strong>Profile</strong></h2>
                 <div class="flex">
                     <div class="col1">
-                        <a href="#"> <img src="../static/eCommerce/img/flower.jpg" alt=""></a>
+                        {% if pic == '' %}
+                            <a href="#"><img src="../static/information/img/flower.jpg"/></a>
+                        {% else %}
+                            <a href="#"><img src="{% url 'photoProfile' userId %}"/></a>
+                        {% endif %}
                     </div>
                     <div class="col2">
                         <h3 class="title"><strong style="float: left;">Personal info</strong><input id="button" class= "fr" type="submit" value="edit" /></h3>
@@ -41,13 +54,14 @@
             <div id="popupContact">
                 <a style="color: brown;" id="popupContactClose">X</a>
                 <h1 style="color: brown;">Update your information</h1>
-                    <form action="{% url 'myinfo' %}" method="POST">
+                    <form action="{% url 'myinfo' %}" method="POST" enctype="multipart/form-data">
                         <p><label>Birthday：</label>{{my_profileForm.birthday}}</p>
                         <p>
                             <label>Gender：</label>
                             </label>{{my_profileForm.gender}}
                         </p>
                          <p><label>Address：</label>{{my_profileForm.address}}</p>
+                        <p><label>Photo: </label>{{ my_profileForm.picture }}</p>
                         <div >
                             <button id="id_post_button" type="submit" >Post</button>
                         </div>

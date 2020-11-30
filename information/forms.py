@@ -76,9 +76,21 @@ class EditProfileForm(forms.ModelForm):
         fields = ('picture', 'birthday', 'gender', 'address')
 
         widgets = {
-            'picture': forms.FileInput(attrs={'id': 'id_profile_picture'}),
+            # 'picture': forms.FileInput(attrs={'id': 'id_profile_picture'}),
             'birthday': forms.TextInput(attrs={"type": "date"})
         }
+
+    def clean_picture(self):
+        picture = self.cleaned_data['picture']
+        if picture is None:
+            return picture
+        # if not picture or not hasattr(picture, 'content_type'):
+        #     raise forms.ValidationError('You must upload a picture')
+        if not picture.content_type or not picture.content_type.startswith('image'):
+            raise forms.ValidationError('File type is not image')
+        if picture.size > MAX_UPLOAD_SIZE:
+            raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
+        return picture
 
     # def clean_picture(self):
     #     picture = self.cleaned_data['picture']
