@@ -3,7 +3,7 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="{% url 'sellerinfo' %}"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    <a href="/seller/sellerinfo?userId={{ sellerId }}"><img src="{% url 'photoDetail' sellerId %}"/></a>
                     <span >Seller name</span>
                 </h3>
                 <div>

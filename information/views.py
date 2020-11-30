@@ -10,6 +10,7 @@ from django.urls import reverse
 from goods.models import Items
 from information.forms import LoginForm, RegisterForm, EditProfileForm
 from information.models import Profile, Cart
+from seller.views import createSeller
 
 
 @login_required
@@ -33,12 +34,11 @@ def myinfo(request):
             'birthday': birthday,
             'gender': gender,
             'address': address,
-            'cartNum': cart_size(request)
+            'cartNum': cart_size(request),
+            'userId': request.user.id,
         }
         return render(request, 'information/myinfo.html', context)
     else:
-
-
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if not form.is_valid():
             pic = request.user.profile.picture
@@ -51,7 +51,8 @@ def myinfo(request):
                 'birthday': birthday,
                 'gender': gender,
                 'address': address,
-                'cartNum': cart_size(request)
+                'cartNum': cart_size(request),
+                'userId': request.user.id,
             }
             return render(request, 'information/myinfo.html', context)
 
@@ -149,6 +150,8 @@ def login_action(request):
         new_user = authenticate(username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password'])
 
+        createSeller(request, new_user)
+
         login(request, new_user)
         return redirect(reverse('home'))
     else:
@@ -181,6 +184,10 @@ def register_action(request):
                                         first_name=form.cleaned_data['first_name'],
                                         last_name=form.cleaned_data['last_name'])
     new_user.save()
+    #
+    # print("Here!!!!!!!!!!!!!!!")
+    #
+    # createSeller(request, new_user)
 
     new_user = authenticate(username=form.cleaned_data['username'],
                             password=form.cleaned_data['password'])

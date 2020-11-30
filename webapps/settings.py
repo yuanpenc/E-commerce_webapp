@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'eCommerce',
+    # 'eCommerce',
     'goods',
     'information',
     'seller',
@@ -56,9 +56,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'webapps.urls'
 
-LOGIN_URL = '/eCommerce/login'
+# LOGIN_URL = '/eCommerce/login'
+LOGIN_URL = '/information/login'
 
-LOGIN_REDIRECT_URL = '/eCommerce/'
+# LOGIN_REDIRECT_URL = '/eCommerce/'
+LOGIN_REDIRECT_URL = '/information/'
 
 TEMPLATES = [
     {
@@ -85,7 +87,7 @@ WSGI_APPLICATION = 'webapps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite33',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

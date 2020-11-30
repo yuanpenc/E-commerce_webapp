@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.showAllOrder),
     path('addOrder', views.createOrder),
     path('showOrderDetail', views.showOrderDetail),
-    path('showAllOrder', views.showAllOrder),
+    path('showAllOrder', views.showAllOrder, name="showAllOrder"),
     path('photo/<int:id>', views.get_photo_goods, name='photoDetail'),
+    path('confirmOrder/', views.confirmOrder)
 ]

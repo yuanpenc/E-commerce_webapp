@@ -5,19 +5,20 @@ from django.shortcuts import render, get_object_or_404
 from seller.forms import *
 
 
-def sellerProfile(request, sellerId = 1):
+def sellerProfile(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default=1)
-    seller = Seller.objects.get(id=sellerId)
+    sellerId = request.GET.get('userId')
+    seller = Seller.objects.get(user=sellerId)
     items = Items.objects.all().filter(created_by=sellerId)
     context['items'] = items
     context['sellerId'] = sellerId
     context['seller'] = seller
     return render(request, 'seller/sellerProfile.html', context)
 
-def createSeller(request):
-    new_Seller = Seller(user=request.user,
-                        name=request.user.first_name + " " + request.user.last_name)
+def createSeller(request, user):
+    new_Seller = Seller(user=user,
+                        name=user.username)
+    new_Seller.save()
     return new_Seller
 
 
@@ -35,10 +36,11 @@ def get_photo_goods(request, id):
 
 def sellerSetting(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default='1')
+    sellerId = request.GET.get('sellerId')
     seller = Seller.objects.get(id = sellerId)
     if request.method == 'GET':
         context['sellerId'] = sellerId
+        context['seller'] = seller
         context['form'] = SellerForm(instance=seller)
         return render(request, 'seller/sellerSetting.html', context)
 
@@ -72,13 +74,14 @@ def sellerSetting(request):
     seller.save()
 
     context['sellerId'] = sellerId
+    context['seller'] = seller
     context['form'] = SellerForm(instance=Seller.objects.get(id=sellerId))
     return render(request, 'seller/sellerSetting.html', context)
 
 
 def addItems(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default=1)
+    sellerId = request.GET.get('sellerId')
     if request.method == 'GET':
         context['sellerId'] = sellerId
         context['form'] = ItemForm()
@@ -88,6 +91,8 @@ def addItems(request):
     if not form.is_valid():
         context['form'] = form
         context['sellerId'] = sellerId
+        seller = Seller.objects.get(id=sellerId)
+        context['seller'] = seller
         return render(request, 'seller/addItem.html', context)
 
     new_item = Items(name=form.cleaned_data['name'],
@@ -121,7 +126,7 @@ def deleteItems(request):
 
 def sellerItemDetail(request):
     context = {}
-    itemId = request.GET.get('itemId', default='1')
+    itemId = request.GET.get('itemId')
     item = Items.objects.get(id=itemId)
     sellerId = item.created_by_id
     if request.method == 'GET':
@@ -133,6 +138,8 @@ def sellerItemDetail(request):
         context['form'] = form
         context['itemId'] = itemId
         context['sellerId'] = sellerId
+        seller = Seller.objects.get(id=sellerId)
+        context['seller'] = seller
         return render(request, 'seller/itemDetail.html', context)
 
     form = ItemDetailForm(request.POST, request.FILES)
@@ -163,4 +170,6 @@ def sellerItemDetail(request):
 
     context = {'itemId': itemId,
                'form': ItemDetailForm(instance=Items.objects.get(id=itemId))}
+    seller = Seller.objects.get(id=sellerId)
+    context['seller'] = seller
     return render(request, 'seller/itemDetail.html', context)

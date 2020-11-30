@@ -19,7 +19,7 @@
                             {% for rec in recommend %}
                             <li>
                                 {# Picture Reference: https://www.amazon.com/ #}
-                                <a href="item_detail?itemId={{ rec.id }}&category={{ category }}"><img src="{% url 'photo' rec.id %}"></a>
+                                <a href="item_detail?itemId={{ rec.id }}&category={{ category }}"><img src="{% url 'photoDetail' rec.id %}"></a>
                                 <h4><a href="item_detail?itemId={{ rec.id }}&category={{ category }}">{{ rec.name }}</a></h4>
                                 <div class="operate">
                                     <span class="prize">$ {{ rec.price }}</span>

@@ -5,7 +5,7 @@
         <div class="container" style="width: 92%; height: 100%; margin-top: 100px; background: rgba(255,255,255,0.85)">
             <div class="left">
                 <h3>
-                    <a href="#"><img src="../static/eCommerce/img/flower.jpg"/></a>
+                    <a href="#"><img src="../static/information/img/flower.jpg"/></a>
                     <span >{{user.username}}</span>
                 </h3>
                 <div>
@@ -19,13 +19,14 @@
                         <li  class="on"><a href="{% url 'myinfo' %}">My profile</a></li>
                         <li><a href="{% url 'myinfo' %}">My adress</a></li>
                     </ul>
+                    <h4><a href="/seller/sellerinfo?userId={{ userId }}">I'm a Seller.</a></h4>
                 </div>
             </div>
             <div class="right">
                 <h2><strong>Profile</strong></h2>
                 <div class="flex">
                     <div class="col1">
-                        <a href="#"> <img src="../static/eCommerce/img/flower.jpg" alt=""></a>
+                        <a href="#"> <img src="../static/information/img/flower.jpg" alt=""></a>
                     </div>
                     <div class="col2">
                         <h3 class="title"><strong style="float: left;">Personal info</strong><input id="button" class= "fr" type="submit" value="edit" /></h3>

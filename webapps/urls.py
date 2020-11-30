@@ -18,7 +18,7 @@ from django.urls import path, include
 from information import views
 
 urlpatterns = [
-
+    # path('eCommerce/', include('eCommerce.urls')),
     path('goods/', include('goods.urls')),
     path('', views.myinfo),
     path('information/', include('information.urls')),
