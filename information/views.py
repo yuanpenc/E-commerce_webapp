@@ -137,6 +137,7 @@ def pay_page(request):
         'address': address,
         'userId': request.user.id
     }
+    content['pic'] = profile = Profile.objects.get(user_id=request.user.id).picture
     return render(request, 'information/pay.html', content)
 
 
