@@ -7,6 +7,7 @@
                 <thead>
                     <tr>
                         <th>Product</th>
+                        <th>Name</th>
                         <th>Price</th>
                         <th>Amount</th>
                         <th>Cost</th>
@@ -22,11 +23,11 @@
 
                             </div>
                             <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="item_photo"></a>
-                            <div class="inline-p">
-                                
-                                <p>{{item.goods.name}}</p>
-                                
-                                    
+
+                        </td>
+                        <td width="150px">
+                            <div class="inline-p" style="margin-top: 30px">
+                                <div><p>{{item.goods.name}}</p></div>
                             </div>
                         </td>
                         <td>
