@@ -9,5 +9,6 @@ urlpatterns = [
     path('addItems', views.addItems, name='addItems'),
     path('itemDetail', views.sellerItemDetail, name='sellerItems'),
     path('createSeller', views.createSeller, name='createSeller'),
-    path('photo/<int:id>', views.get_photo_goods, name='photoSeller'),
+    path('photo/<int:id>', views.get_photo_Seller, name='photoSeller'),
+    path('photo/<int:id>', views.get_photo_QR, name='photoQR'),
 ]
