@@ -17,6 +17,14 @@ def logout_action(request):
     return redirect(reverse('login'))
 
 @login_required
+def delete(request):
+    itemId = request.GET.get('itemId')
+    print(itemId)
+    Cart.objects.filter(user=request.user.id).get(goods_id=int(itemId)).delete()
+    return HttpResponse()
+
+
+@login_required
 def myinfo(request):
     if request.method == 'GET':
 
