@@ -8,6 +8,7 @@ local_settings.py
 *#
 
 # Django's SQL Lite Database File
+db.sqlite3
 db.sqlite32
 db.sqlite33
 db.sqlite34
@@ -19,7 +20,7 @@ db.sqlite36
 
 # Image folder
 images
-socialnetwork/migrations
+
 # MacOS index file
 .DS_Store
 .idea
