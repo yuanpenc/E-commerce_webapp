@@ -18,7 +18,7 @@ class Profile(models.Model):
 
     picture = models.FileField(blank=True)
     content_type = models.CharField(max_length=50)
-    address = models.CharField(max_length=200, default="Greenfield 829 Ave, Pittsburgh, PA")
+    address = models.CharField(max_length=200, default="No specific address")
     birthday = models.DateTimeField(default=datetime.now)
     gender = models.CharField(max_length=200, default="male")
 
@@ -29,7 +29,7 @@ class Profile(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, related_name="cart",on_delete=models.CASCADE)
-    goods = models.ForeignKey(Items,on_delete=models.CASCADE)
+    goods = models.ForeignKey(Items, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=User)

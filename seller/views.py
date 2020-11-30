@@ -1,44 +1,50 @@
+from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from seller.forms import *
 
-
-def sellerProfile(request, sellerId = 1):
+@login_required
+def sellerProfile(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default=1)
-    seller = Seller.objects.get(id=sellerId)
+    sellerId = request.GET.get('userId')
+    seller = Seller.objects.get(user=sellerId)
     items = Items.objects.all().filter(created_by=sellerId)
     context['items'] = items
     context['sellerId'] = sellerId
     context['seller'] = seller
     return render(request, 'seller/sellerProfile.html', context)
 
+@login_required
 def createSeller(request):
-    new_Seller = Seller(user=request.user,
-                        name=request.user.first_name + " " + request.user.last_name)
-    return new_Seller
+    userId = request.GET.get('userId')
+    user = User.objects.get(id=userId)
+    new_Seller = Seller(user=user,
+                        name=user.username)
+    new_Seller.save()
+    return sellerProfile(request)
 
-
+@login_required
 def get_photo_goods(request, id):
-    item = get_object_or_404(Items, id=id)
+    seller = get_object_or_404(Seller, id=id)
     # print('Picture #{} fetched from db: {} (type={})'.format(id, item.image, type(item.image)))
 
     # Maybe we don't need this check as form validation requires a picture be uploaded.
     # But someone could have delete the picture leaving the DB with a bad references.
-    if not item.image:
+    if not seller.image:
         raise Http404
 
-    return HttpResponse(item.image, content_type=item.content_type)
+    return HttpResponse(seller.image, content_type=seller.image_content_type)
 
-
+@login_required
 def sellerSetting(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default='1')
+    sellerId = request.GET.get('sellerId')
     seller = Seller.objects.get(id = sellerId)
     if request.method == 'GET':
         context['sellerId'] = sellerId
+        context['seller'] = seller
         context['form'] = SellerForm(instance=seller)
         return render(request, 'seller/sellerSetting.html', context)
 
@@ -72,22 +78,27 @@ def sellerSetting(request):
     seller.save()
 
     context['sellerId'] = sellerId
+    context['seller'] = seller
     context['form'] = SellerForm(instance=Seller.objects.get(id=sellerId))
     return render(request, 'seller/sellerSetting.html', context)
 
-
+@login_required
 def addItems(request):
     context = {}
-    sellerId = request.GET.get('sellerId', default=1)
+    sellerId = request.GET.get('sellerId')
+    seller = Seller.objects.get(id = sellerId)
     if request.method == 'GET':
         context['sellerId'] = sellerId
         context['form'] = ItemForm()
+        context['seller'] = seller
         return render(request, 'seller/addItem.html', context)
 
     form = ItemForm(request.POST, request.FILES)
     if not form.is_valid():
         context['form'] = form
         context['sellerId'] = sellerId
+        seller = Seller.objects.get(id=sellerId)
+        context['seller'] = seller
         return render(request, 'seller/addItem.html', context)
 
     new_item = Items(name=form.cleaned_data['name'],
@@ -107,9 +118,18 @@ def addItems(request):
 
     new_item.content_type = form.cleaned_data['image'].content_type
     new_item.save()
-    return sellerProfile(request)
+
+    context = {}
+    seller = Seller.objects.get(user=request.user.id)
+    items = Items.objects.all().filter(created_by=sellerId)
+    context['items'] = items
+    context['sellerId'] = sellerId
+    context['seller'] = seller
+    return render(request, 'seller/sellerProfile.html', context)
 
 
+
+@login_required
 def deleteItems(request):
     itemId = request.GET.get('itemId')
     item = get_object_or_404(Items, id=itemId)
@@ -118,10 +138,10 @@ def deleteItems(request):
     return sellerProfile(request)
 
 
-
+@login_required
 def sellerItemDetail(request):
     context = {}
-    itemId = request.GET.get('itemId', default='1')
+    itemId = request.GET.get('itemId')
     item = Items.objects.get(id=itemId)
     sellerId = item.created_by_id
     if request.method == 'GET':
@@ -133,6 +153,8 @@ def sellerItemDetail(request):
         context['form'] = form
         context['itemId'] = itemId
         context['sellerId'] = sellerId
+        seller = Seller.objects.get(id=sellerId)
+        context['seller'] = seller
         return render(request, 'seller/itemDetail.html', context)
 
     form = ItemDetailForm(request.POST, request.FILES)
@@ -163,4 +185,6 @@ def sellerItemDetail(request):
 
     context = {'itemId': itemId,
                'form': ItemDetailForm(instance=Items.objects.get(id=itemId))}
+    seller = Seller.objects.get(id=sellerId)
+    context['seller'] = seller
     return render(request, 'seller/itemDetail.html', context)

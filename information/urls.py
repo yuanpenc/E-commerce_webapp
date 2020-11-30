@@ -1,7 +1,5 @@
-from django.contrib import admin
 from django.urls import path
 from information import views
-from goods import views as g_views
 
 urlpatterns = [
     path('', views.myinfo, name='home'),
@@ -10,11 +8,12 @@ urlpatterns = [
     path('profile', views.profile_page, name='profile'),
     path('myinfo', views.myinfo, name='myinfo'),
     path('cart', views.cart_page, name='cart'),
-    path('photo/<int:id>', g_views.get_photo, name='photo'),
-    path('logout', views.logout, name='logout'),
+    path('photo/<int:id>', views.get_photo_goods, name='photoProfile'),
+    path('logout', views.logout_action, name='logout'),
     path('addToCart', views.cart_add, name='addToCart'),
     path('pay', views.pay_page, name='pay'),
     path('create', views.create_order_pre_pay, name='create'),
-    path('create_seller', views.create_seller, name='create_seller')
+    path('create_seller', views.create_seller, name='create_seller'),
+    path('delete_item_in_cart', views.delete, name='delete_item_in_cart')
 
 ]

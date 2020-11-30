@@ -25,7 +25,7 @@ SECRET_KEY = 'fj617mmq3x69a_dywg5di52o@nc7p$@n(%ykrc%am@!#2hkne5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'eCommerce',
+    # 'eCommerce',
     'goods',
     'information',
     'seller',
@@ -56,9 +56,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'webapps.urls'
 
-LOGIN_URL = '/eCommerce/login'
+LOGIN_URL = '/information/login'
 
-LOGIN_REDIRECT_URL = '/eCommerce/'
+LOGIN_REDIRECT_URL = '/information/'
 
 TEMPLATES = [
     {

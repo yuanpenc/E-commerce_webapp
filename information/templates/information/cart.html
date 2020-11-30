@@ -7,6 +7,7 @@
                 <thead>
                     <tr>
                         <th>Product</th>
+                        <th>Name</th>
                         <th>Price</th>
                         <th>Amount</th>
                         <th>Cost</th>
@@ -18,26 +19,26 @@
                     <tr>
                         <td class="td1">
                             <div class="inline">
-                                <input type="checkbox" name="is_checkbox" id="is-checkbox_{{item.id}}">
+                                <input type="checkbox" name="is_checkbox" id="is-checkbox_{{item.goods.id}}">
 
                             </div>
                             <a href="#" class="inline-img"><img src="{% url 'photo' item.goods_id %}" alt="item_photo"></a>
-                            <div class="inline-p">
-                                
-                                <p>{{item.goods.name}}</p>
-                                
-                                    
+
+                        </td>
+                        <td width="150px">
+                            <div class="inline-p" style="margin-top: 30px">
+                                <div><p>{{item.goods.name}}</p></div>
                             </div>
                         </td>
                         <td>
-                            <div class="price"><input style="width: 60px; height: 20px;text-align: center;" type="text" id="price_{{item.id}}" value="{{item.goods.price}}" readonly /></div>
+                            <div class="price"><input style="width: 60px; height: 20px;text-align: center;" type="text" id="price_{{item.goods.id}}" value="{{item.goods.price}}" readonly /></div>
                         </td>
                         <td>
                             <div class="amount">
-                                <img  id="num-sub_{{item.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.goods.id}})" alt="sub">
-                                <input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.id}}" value="1" readonly />
+                                <img  id="num-sub_{{item.goods.id}}" src="../static/eCommerce/img/sub.jpg" onclick="sub({{item.goods.id}})" alt="sub">
+                                <input style="width: 28px; text-align: center;" type="text" id="input-num_{{item.goods.id}}" value="1" readonly />
 
-                                <img id="num-add_{{item.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.goods.id}})" alt="add">
+                                <img id="num-add_{{item.goods.id}}" src="../static/eCommerce/img/add.jpg" onclick="add({{item.goods.id}})" alt="add">
                             </div>
                         </td>
                         <td>
@@ -46,7 +47,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="Button">Delete</div>
+                            <div class="Button" onclick="delete_item({{ item.goods.id }})">Delete</div>
                         </td>
                     </tr>
                     {% endfor %}
@@ -66,8 +67,20 @@
     <script>
 
 
+        function delete_item(itemId) {
+            $.ajax({
+                url: "/information/delete_item_in_cart",
+                type: "GET",
+                data: {'itemId': itemId},
+                success: function (response) {
+                    location.reload();
+                }
+            })
+        }
+
+
         function add(id){
-            var num_add = document.getElementById("num-add_");
+            var num_add = document.getElementById("num-add_"+id);
             var input_num = document.getElementById("input-num_"+id);
             var cost = document.getElementById("cost_num_"+id);
             var price = document.getElementById("price_"+id)
