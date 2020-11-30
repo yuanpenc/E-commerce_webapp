@@ -47,7 +47,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="Button">Delete</div>
+                            <div class="Button" onclick="delete_item({{ item.goods.id }})">Delete</div>
                         </td>
                     </tr>
                     {% endfor %}
@@ -65,6 +65,18 @@
     </div>
 
     <script>
+
+
+        function delete_item(itemId) {
+            $.ajax({
+                url: "/information/delete_item_in_cart",
+                type: "GET",
+                data: {'itemId': itemId},
+                success: function (response) {
+                    location.reload();
+                }
+            })
+        }
 
 
         function add(id){

@@ -13,6 +13,14 @@ from information.models import Profile, Cart
 
 
 @login_required
+def delete(request):
+    itemId = request.GET.get('itemId')
+    print(itemId)
+    Cart.objects.filter(user=request.user.id).get(goods_id=int(itemId)).delete()
+    return HttpResponse()
+
+
+@login_required
 def myinfo(request):
     if request.method == 'GET':
         form = EditProfileForm(instance=request.user.profile)
@@ -76,7 +84,7 @@ def cart_add(request):
     itemId = request.GET.get('itemId')
     cart_item = Cart.objects.filter(user_id=request.user)
     for item in cart_item:
-        if int(item.goods_id) == itemId:
+        if int(item.goods_id) == int(itemId):
             return
     new_cart_item = Cart(user=request.user, goods=Items.objects.get(id=itemId))
     new_cart_item.save()

@@ -29,7 +29,7 @@ class Profile(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, related_name="cart",on_delete=models.CASCADE)
-    goods = models.ForeignKey(Items,on_delete=models.CASCADE)
+    goods = models.ForeignKey(Items, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=User)
